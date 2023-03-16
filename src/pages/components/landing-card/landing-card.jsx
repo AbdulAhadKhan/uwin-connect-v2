@@ -12,7 +12,7 @@ function PrettyCard() {
             <div className="logo-type">
                 <img src={UW_logo} alt="UW logo" />
                 <h1>UWin Connect</h1>
-                <h2><i>powerd by</i> Quantum</h2>
+                <h2><i>powerd by</i> Quantum Leap</h2>
             </div>
         </div>
     )
