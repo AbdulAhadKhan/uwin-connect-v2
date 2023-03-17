@@ -1,5 +1,4 @@
-import Login from './forms/login'
-import Signup from './forms/signup'
+import { Outlet } from 'react-router-dom'
 
 import cafe from '../../../assets/images/cafe.png'
 import UW_logo from '../../../assets/images/UW Logo.svg'
@@ -22,7 +21,7 @@ function PrettyCard() {
 function LoginCard() {
     return (
         <div className="landing-container">
-            <Signup />
+            <Outlet />
         </div>
     )
 }
