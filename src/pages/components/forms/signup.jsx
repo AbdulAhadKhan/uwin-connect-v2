@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom"
+
 import ValidatedInput from "../validated-fields/input"
 import ValidatedSelect from "../validated-fields/select"
 
@@ -23,7 +25,7 @@ export default function Signup() {
                     <ValidatedInput type="password" id="confirm-password" placeholder="Confirm Password" blank={false} />
                 </div>
                 <button type="submit">Sign Up</button>
-                <p>Already have an account? <a href="#">Log In</a></p>
+                <p>Already have an account? <NavLink to="/">Login</NavLink></p>
             </form>
         </div>
     )
