@@ -1,4 +1,5 @@
 import Login from './forms/login'
+import Signup from './forms/signup'
 
 import cafe from '../../../assets/images/cafe.png'
 import UW_logo from '../../../assets/images/UW Logo.svg'
@@ -20,8 +21,8 @@ function PrettyCard() {
 
 function LoginCard() {
     return (
-        <div className="login-container">
-            <Login />
+        <div className="landing-container">
+            <Signup />
         </div>
     )
 }
