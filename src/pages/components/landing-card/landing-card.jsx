@@ -18,7 +18,7 @@ function PrettyCard() {
     )
 }
 
-function LoginCard() {
+function FormCard() {
     return (
         <div className="landing-container">
             <Outlet />
@@ -30,7 +30,7 @@ export default function LandingCard() {
     return (
         <div className="landing-card">
             <PrettyCard />
-            <LoginCard />
+            <FormCard />
         </div>
     )
 }
