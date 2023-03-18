@@ -8,12 +8,12 @@ function validateSelect(value, setErrorState, blank) {
     }
 }
 
-export default function ValidatedSelect({id, className="", blank, children}) {
+export default function ValidatedSelect({id, className="", blank, onChange, children}) {
     const [errorState, setErrorState] = useState("")
 
     return <select id={id} className={className + errorState} 
             onBlur={event => validateSelect(event.target.value, setErrorState, blank)}
-            defaultValue="default">
+            defaultValue="default" onChange={(event) => onChange(event)}>
         {children}
     </select>
 }
