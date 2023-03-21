@@ -179,9 +179,13 @@
     align-self: center;
 }
 
-.hint {
+p.hint {
     color: #ff0000 !important;
     margin: 0 !important;
     padding-left: 10px;
     align-self: start !important;
+}
+
+p.prompt {
+    margin: 0 !important;
 }

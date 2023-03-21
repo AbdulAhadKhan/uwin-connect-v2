@@ -1,22 +1,17 @@
 import { useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate, Navigate } from "react-router-dom"
 import { Formik, Form, Field } from "formik"
 
-function onSubmit(values) {
-    console.log(values)
-}
+import { getSHA256Hash, instance } from "../../../utils"
 
 export default function Login() {
-    const [emailErrorClass, setEmailErrorClass] = useState("")
-    const [passwordErrorClass, setPasswordErrorClass] = useState("")
+    const navigate = useNavigate()
+    const [loginError, setLoginError] = useState(false)
     
     const validateEmail = (email) => {
         let error = ""
-        if (!email.endsWith("@uwindsor.ca") || email.length < 13) {
+        if (!email.endsWith("@uwindsor.ca") || email.length < 13)
             error = "UWindsor email is required"
-            setEmailErrorClass(" error")
-        }
-        else setEmailErrorClass("")
         return error
     }
 
@@ -24,19 +19,34 @@ export default function Login() {
         let error = ""
         if (!password)
             error = "Password is required"
-        else setPasswordErrorClass("")
         return error
     }
 
-    const fields = [
-        {name: "email", type: "email", placeholder: "Email", validation: validateEmail},
-        {name: "password", type: "password", placeholder: "Password", validation: validatePassword}
-    ]
-    
+    async function onSubmit(values) {
+        const data = {
+            ...values,
+            password: await getSHA256Hash(values.password),
+            meta: {
+                machine_id: await getSHA256Hash(navigator.userAgent),
+                login_time: Date.now()
+            }
+        }
+
+        await instance.post("/login", data).then((response) => {
+            localStorage.setItem("sessionInfo", {
+                sessionID: response.data.session_id,
+                email: values.email,
+            })
+            navigate("/home")
+        }).catch(() => setLoginError(true))
+    }
+
     return (
         <div className="landing-form">
+            {localStorage.getItem("sessionInfo") && <Navigate to="/home" />}
             <h1>Login</h1>
             <hr />
+            {loginError && <p className="prompt">Invalid email or password</p>}
             <Formik initialValues={{ email: "", password: "" }} onSubmit={onSubmit}>
                 {({ errors, touched }) => (
                     <Form>
