@@ -125,11 +125,6 @@
     border: 1px solid #005596;
 }
 
-.landing-form form input.error,
-.landing-form form select.error {
-    border: 1px solid #ff0000;
-}
-
 .landing-form .scrollable {
     overflow-y: scroll;
     height: 18em;
@@ -175,16 +170,18 @@
     background-color: #004a7f;
 }
 
-.landing-form form p {
+.landing-form p {
     margin: 2em 0;
     font-family: 'Poppins', sans-serif;
     font-size: 0.8em;
     font-weight: 300;
     color: #474747;
+    align-self: center;
 }
 
 .hint {
     color: #ff0000 !important;
     margin: 0 !important;
     padding-left: 10px;
+    align-self: start !important;
 }
