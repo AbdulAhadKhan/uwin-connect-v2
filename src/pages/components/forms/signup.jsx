@@ -1,48 +1,92 @@
-import { useState } from "react"
+import { Formik, Field, Form } from "formik"
 import { NavLink } from "react-router-dom"
 
-import ValidatedInput from "../validated-fields/input"
-import ValidatedSelect from "../validated-fields/select"
+function onSubmit(values) {
+    console.log("Signup form submitted")
+}
 
 export default function Signup() {
-    const [validity, setValidity] = useState({})
-    const [password, setPassword] = useState("")
-    const [selectedRole, setSelectedRole] = useState("default")
+    const validateEmail = (email) => {
+        let error = ""
+        if (!email.endsWith("@uwindsor.ca") || email.length < 13)
+            error = "You need a UWindsor email to sign up 🥺"
+        return error
+    }
 
-    const validatePassword = (password) => password.length >= 8
-    const validateConfirmPassword = (confirmPassword) => confirmPassword === password
-    const validateEmail = (email) => email.endsWith("@uwindsor.ca") && email.length > 13
+    const validatePassword = (password) => {
+        let error = ""
+        if (!password || password.length < 8)
+            error = "Password must be at least 8 characters"
+        return error
+    }
 
-    const validityCallback = (id, state) =>  setValidity({...validity, [id]: state})
-    
+    const validateConfirmPassword = (confirmPassword, password) => {
+        let error = ""
+        if (confirmPassword !== password)
+            error = "Passwords do not match"
+        return error
+    }
+
+    const validateRole = (role) => {
+        let error = ""
+        if (role === "default")
+            error = "Role is required"
+        return error
+    }
+
+    const validateRequired = (value, name) => {
+        let error = ""
+        if (!value)
+            error = `${name} is required`    
+        return error
+    }
+
     return (
         <div className="landing-form">
             <h1>Signup</h1>
-            <form>
-                <hr />
-                <div className="scrollable">
-                    <ValidatedInput type="text" id="email" placeholder="UWindsor Email" blank={false} setIsInvalid={validityCallback}
-                                    hint="Here's an example: example@uwindsor.ca" customValidation={validateEmail} />
-                    <ValidatedInput type="password" id="password" placeholder="Password" blank={false} 
-                                    setParentState={setPassword} customValidation={validatePassword}
-                                    hint="Your password must be at least 8 characters" />
-                    <ValidatedInput type="password" id="confirm-password" placeholder="Confirm Password" 
-                                    blank={false} customValidation={validateConfirmPassword} 
-                                    hint="Your passwords don't match 🥺" />
-                    <ValidatedInput type="text" id="first-name" placeholder="First Name" blank={false} />
-                    <ValidatedInput type="text" id="last-name" placeholder="Last Name" blank={false} />
-                    <ValidatedSelect id="role" blank={false} onChange={(event) => setSelectedRole(event.target.value)}>
-                        <option value="default" disabled hidden>Role in the UWindsor...</option>
-                        <option value="student">Student</option>
-                        <option value="faculty">Faculty</option>
-                        <option value="staff">Staff</option>
-                    </ValidatedSelect>
-                    <ValidatedInput type="text" id="department" placeholder="Department or Program" blank={false} />
-                    {selectedRole === "faculty" && <ValidatedInput type="text" id="designation" placeholder="Designation" blank={false} />}
-                </div>
-                <button type="submit">Sign Up</button>
-                <p>Already have an account? <NavLink to="/">Login</NavLink></p>
-            </form>
+            <hr />
+            <Formik initialValues={{ email: "", password: "", confirmPassword: "",
+                firstName: "", lastName: "", role: "default", department: "",
+                designation: "" }} onSubmit={onSubmit}>
+                    {({ errors, touched, values }) => (
+                        <Form>
+                            <div className="scrollable">
+                                <Field name="email" type="email" placeholder="Email" validate={validateEmail} />
+                                {errors.email && touched.email && <p className="hint">{errors.email}</p>}
+                                <Field name="password" type="password" placeholder="Password" validate={validatePassword} />
+                                {errors.password && touched.password && <p className="hint">{errors.password}</p>}
+                                <Field name="confirmPassword" type="password" placeholder="Confirm Password"
+                                    validate={(confirmPassword) => validateConfirmPassword(confirmPassword, values.password)} />
+                                {errors.confirmPassword && touched.confirmPassword && <p className="hint">{errors.confirmPassword}</p>}
+                                <Field name="firstName" type="text" placeholder="First Name"
+                                    validate={(firstName) => validateRequired(firstName, "First Name")} />
+                                {errors.firstName && touched.firstName && <p className="hint">{errors.firstName}</p>}
+                                <Field name="lastName" type="text" placeholder="Last Name"
+                                    validate={(lastName) => validateRequired(lastName, "Last Name")} />
+                                {errors.lastName && touched.lastName && <p className="hint">{errors.lastName}</p>}
+                                <Field name="role" as="select" validate={validateRole}>
+                                    <option value="default" disabled hidden>Your role in UWindsor...</option>
+                                    <option value="student">Student</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="staff">Staff</option>
+                                </Field>
+                                {errors.role && touched.role && <p className="hint">{errors.role}</p>}
+                                <Field name="department" type="text" placeholder="Department" 
+                                    validate={(department) => validateRequired(department, "Department")} />
+                                {errors.department && touched.department && <p className="hint">{errors.department}</p>}
+                                {values.role === "faculty" && (
+                                    <>
+                                        <Field name="designation" type="text" placeholder="Designation"
+                                            validate={(designation) => validateRequired(designation, "Designation")} />
+                                        {errors.designation && touched.designation && <p className="hint">{errors.designation}</p>}
+                                    </>
+                                )}
+                            </div>
+                            <button type="submit">Sign Up</button>
+                        </Form>
+                    )}
+            </Formik>
+            <p>Already have an account? <NavLink to="/">Login</NavLink></p>
         </div>
     )
 }
