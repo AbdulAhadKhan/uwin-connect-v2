@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
+import Navbar from "./components/navbar/navbar"
+
 export default function Home() {
     const navigate = useNavigate()
     
@@ -10,7 +12,7 @@ export default function Home() {
     
     return (
         <div className="home">
-            <h1>home</h1>
+            <Navbar />
             <button onClick={logout}>Logout</button>
         </div>
     )

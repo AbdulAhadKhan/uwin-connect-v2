@@ -1,0 +1,148 @@
+.navbar {
+    background-color: #151A24;
+    color: #f6f6f6;
+    width: 100vw;
+    height: max-content;
+    position: fixed;
+    padding: 0.75em 0;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: [first] 25% [mid] auto [last] 25%;
+}
+
+.left {
+    grid-column: first;
+    display: flex;
+    align-items: center;
+}
+
+.center {
+    grid-column: mid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    grid-column: last;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.navbar__logo {
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar__logo h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0;
+    float: right;
+}
+
+.navbar__logo img {
+    height: 2rem;
+    margin-right: 0.5rem;
+}
+
+.navbar__logo:hover {
+    opacity: 0.8;
+}
+
+.navbar__search {
+    background-color: #2D2F3A;
+    width: 70%;
+    height: 2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar__search * {
+    height: 100%;
+    width: 100%;
+}
+
+.navbar__search .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0 0.5rem;
+}
+
+.navbar__search .search-container input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #cdcdcd;
+    width: 100%;
+}
+
+.navbar__search .search-container::placeholder {
+    color: #8b8d97;
+} 
+
+.navbar__search .search-container .search-icon {
+    color: #8b8d97;
+    width: 1.5rem;
+}
+
+.navbar__profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 2rem;
+}
+
+.navbar__profile img {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1.2rem;
+}
+
+.navbar__profile .dropdown-icon {
+    color: #ffffff;
+    width: 1.5rem;
+}
+
+.navbar__profile .name-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 1.5rem;
+    line-height: 1.2rem;
+}
+
+.navbar__profile .name-container .name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar__profile .name-container .email {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .message-icon {
+    color: #ffffff;
+    margin-right: 1.5rem;
+}
