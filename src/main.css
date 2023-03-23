@@ -25,7 +25,7 @@
       32.6px 55.4px 74.2px -2.3px hsl(var(--shadow-color) / 0.24);
   }
 
-html body {
+html, body {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
