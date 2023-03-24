@@ -33,14 +33,12 @@ export default function Login() {
         }
 
         await instance.post("/login", data).then((login_response) => {
-            instance.get(`/get-user/${values.email}`).then((user_response) => {
-                localStorage.setItem("sessionInfo", JSON.stringify({
-                    sessionID: login_response.data.session_id,
-                    user: user_response.data,
-                }))
-            })
-            navigate("/home")
-        }).catch(() => setLoginError(true))
+            localStorage.setItem("sessionInfo", JSON.stringify({
+                sessionID: login_response.data.session_id,
+                email: values.email,
+            }))
+        }).then(() => navigate("/home"))
+        .catch(() => setLoginError(true))
     }
 
     return (
