@@ -1,19 +1,15 @@
-import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 import Navbar from "./components/navbar/navbar"
 
 export default function Home() {
-    const navigate = useNavigate()
-    
-    const logout = () => {
-        localStorage.removeItem("sessionInfo")
-        navigate("/")
+    if (!localStorage.getItem("sessionInfo")) {
+        return <Navigate to="/" />
     }
     
     return (
         <div className="home">
             <Navbar />
-            <button onClick={logout}>Logout</button>
         </div>
     )
 }
