@@ -1,39 +1,67 @@
+import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { BiSearchAlt, BiMessageAlt } from "react-icons/bi"
-import { HiChevronDown } from "react-icons/hi"
+import { HiOutlineLogout } from "react-icons/hi"
+import { useNavigate } from "react-router-dom"
+import  Avatar from "boring-avatars"
 
+import { getImage } from "../../../api/images"
+import { getUserDetails } from "../../../api/users"
 import UWinLogo from "../../../assets/images/UW Logo.svg"
-import TestImage from "../../../assets/images/cafe.png"
 
 import "./navbar.css"
 
+function ProfileImage({ image_id, user_name }) {
+    return (image_id ? <img src={`http://localhost:8000/get-image/${image_id}`} 
+                className="profile-image" /> 
+        : <Avatar size={40} name={user_name} variant="beam" 
+            colors={[ "#5F545C", "#EB7072", "#F5BA90", "#F5E2B8", "#A2CAA5" ]} />)
+}
+
 export default function Navbar() {
-  return (
-    <nav className="navbar">
-        <div className="left">
-            <div className="navbar__logo test">
-                <img src={UWinLogo} alt="UWin Logo" />
-                <h1>UWin Connect</h1>
-            </div>
-        </div>
-        <div className="center">
-            <div className="navbar__search">
-                <div className="search-container">
-                    <input type="text" placeholder="Search here..." />
-                    <BiSearchAlt className="search-icon" />
+    const { email } = JSON.parse(localStorage.getItem("sessionInfo"))
+    const [user, setUser] = useState({firstname: "John", lastname: "Doe"})
+    const navigate = useNavigate()
+    
+    const logout = () => {
+        localStorage.removeItem("sessionInfo")
+        navigate("/")
+    }
+
+    useQuery({
+        queryKey: ["user", email],
+        queryFn: () => getUserDetails(email),
+        onSuccess: (response) => setUser(response.data),
+    })
+
+    return (
+        <nav className="navbar">
+            <div className="left">
+                <div className="navbar__logo test" onClick={() => navigate("/home")} >
+                    <img src={UWinLogo} alt="UWin Logo" />
+                    <h1>UWin Connect</h1>
                 </div>
             </div>
-        </div>
-        <div className="right">
-            <BiMessageAlt className="message-icon" size={"1.25em"} />
-            <div className="navbar__profile">
-                <img src={TestImage} alt="Profile" />
-                <div className="name-container">
-                    <div className="name">John Doe</div>
-                    <div className="email">john@uwindsor.ca</div>
+            <div className="center">
+                <div className="navbar__search">
+                    <div className="search-container">
+                        <input type="text" placeholder="Search here..." />
+                        <BiSearchAlt className="search-icon" />
+                    </div>
                 </div>
-                <HiChevronDown className="dropdown-icon" />
             </div>
-        </div>
-    </nav>
-  )
+            <div className="right">
+                <HiOutlineLogout className="logout-icon" size={"1.25em"} onClick={logout} />
+                <BiMessageAlt className="message-icon" size={"1.25em"} />
+                <div className="navbar__profile">
+                    <ProfileImage user_name={user?.firstname + " " + user?.lastname} 
+                        className="profile-image" image_id={user?.image} />
+                    <div className="name-container">
+                        <div className="name">{user?.firstname + " " + user?.lastname}</div>
+                        <div className="email">{user?.email}</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    )
 }
