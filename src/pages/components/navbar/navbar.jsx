@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { BiSearchAlt, BiMessageAlt } from "react-icons/bi"
-import { HiOutlineLogout, HiPlusSm } from "react-icons/hi"
-import { useNavigate } from "react-router-dom"
+import { HiOutlineLogout } from "react-icons/hi"
+import { useNavigate, createSearchParams } from "react-router-dom"
 import  Avatar from "boring-avatars"
 
 import { getUserDetails } from "../../../api/users"
@@ -60,6 +60,11 @@ function Right() {
         localStorage.removeItem("sessionInfo")
         navigate("/")
     }
+    
+    const toProfile = () => {
+        const params = createSearchParams({ email: email })
+        navigate({ pathname: "/profile/", search: params.toString() })
+    }
 
     useQuery({
         queryKey: ["user", email],
@@ -71,7 +76,7 @@ function Right() {
         <div className="right">
             <HiOutlineLogout className="logout-icon" size={"1.25em"} onClick={logout} />
             <BiMessageAlt className="message-icon" size={"1.25em"} />
-            <div className="navbar__profile">
+            <div className="navbar__profile" onClick={toProfile} >
                 <ProfileImage user_name={user?.firstname + " " + user?.lastname} 
                     className="profile-image" image_id={user?.image} />
                 <div className="name-container">
