@@ -131,11 +131,6 @@
     object-fit: cover;
 }
 
-.navbar__profile .dropdown-icon {
-    color: #ffffff;
-    width: 1.5rem;
-}
-
 .navbar__profile .name-container {
     display: flex;
     flex-direction: column;
