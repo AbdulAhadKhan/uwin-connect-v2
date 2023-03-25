@@ -77,7 +77,7 @@ function Right() {
     return (
         <div className="right">
             <HiOutlineLogout className="logout-icon" size={"1.25em"} onClick={logout} />
-            <BiMessageAlt className="message-icon" size={"1.25em"} />
+            <BiMessageAlt className="message-icon" size={"1.25em"} onClick={() => navigate("/chat")} />
             <div className="navbar__profile" onClick={toProfile} >
                 <ProfileImage user_name={user?.firstname + " " + user?.lastname} 
                     className="profile-image" image_id={user?.image} />

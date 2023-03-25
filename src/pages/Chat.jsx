@@ -9,7 +9,7 @@ export default function Chat() {
     
     return (
         <div className="chat naved-page">
-            <Navbar />
+            <Navbar hideCreate />
         </div>
     )
 }
