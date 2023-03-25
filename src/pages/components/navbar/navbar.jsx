@@ -20,6 +20,8 @@ function CreatePostButton() {
 }
 
 function Left({ hideCreate }) {
+    const navigate = useNavigate()
+    
     return (
         <div className="left">
             <div className="navbar__logo test" onClick={() => navigate("/home")} >
