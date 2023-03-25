@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { BiSearchAlt, BiMessageAlt } from "react-icons/bi"
 import { HiOutlineLogout } from "react-icons/hi"
@@ -33,12 +33,28 @@ function Left({ hideCreate }) {
     )
 }
 
-function Center() {
+function Center({ value }) {
+    const navigate = useNavigate()
+    const [searchValue, setSearchValue] = useState(value || "")
+
+    useEffect(() => {
+        setSearchValue(value)
+    }, [])
+
+    function onEnter(event) {
+        if (event.key === "Enter") {
+            const params = createSearchParams({ query: event.target.value })
+            navigate({ pathname: "/search", search: params.toString() })
+        }
+    }
+    
     return (
         <div className="center">
             <div className="navbar__search">
                 <div className="search-container">
-                    <input type="text" placeholder="Search here..." />
+                    <input type="text" placeholder="Search here..." 
+                        onKeyDown={onEnter} value={searchValue} 
+                        onChange={(event) => setSearchValue(event.target.value)} />
                     <BiSearchAlt className="search-icon" />
                 </div>
             </div>
@@ -65,7 +81,7 @@ function Right() {
     
     const toProfile = () => {
         const params = createSearchParams({ email: email })
-        navigate({ pathname: "/profile/", search: params.toString() })
+        navigate({ pathname: "/profile", search: params.toString() })
     }
 
     useQuery({
@@ -90,11 +106,11 @@ function Right() {
     )
 }
 
-export default function Navbar({ hideCreate }) {
+export default function Navbar({ hideCreate, value }) {
     return (
         <nav className="navbar">
             <Left hideCreate={hideCreate} />
-            <Center />
+            <Center value={value} />
             <Right />
         </nav>
     )
