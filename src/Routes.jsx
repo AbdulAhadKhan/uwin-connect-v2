@@ -16,7 +16,7 @@ export const BrowserRouter = createBrowserRouter([
         { path: "/signup", element: <Signup /> },
     ] },
     { path: "/home", element: <Home /> },
-    { path: "/profile", element: <Profile /> },
+    { path: "/profile/:email", element: <Profile /> },
     { path: "/chat", element: <Chat /> },
     { path: "/search", element: <SearchResults /> },
 ])
