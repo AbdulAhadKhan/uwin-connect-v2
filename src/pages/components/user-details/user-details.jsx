@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
+import { useParams } from "react-router-dom"
 import { IconContext } from "react-icons"
 import { HiOutlinePencilSquare } from "react-icons/hi2"
 
@@ -16,8 +17,11 @@ function UserAvatar({ imageID, id }) {
 }
 
 export default function UserDetails() {
+    const { id } = useParams()
     const [user, setUser] = useState({})
-    const { id, domain } = JSON.parse(localStorage.getItem("sessionInfo"))
+    const { domain } = JSON.parse(localStorage.getItem("sessionInfo"))
+
+    console.log(id)
 
     useQuery({
         queryKey: ["user", `${id}@${domain}`],
