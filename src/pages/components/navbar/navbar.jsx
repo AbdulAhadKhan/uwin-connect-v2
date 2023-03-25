@@ -42,7 +42,6 @@ function Center({ value }) {
     }, [])
 
     function onEnter(event) {
-        event.preventDefault()
         if (event.key === "Enter") {
             const params = createSearchParams({ query: event.target.value })
             event.target.blur()
