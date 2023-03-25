@@ -76,8 +76,6 @@ function Right() {
     const [user, setUser] = useState({firstname: "John", lastname: "Doe"})
     const email = id + "@" + domain
 
-    console.log(email)
-
     const logout = () => {
         localStorage.removeItem("sessionInfo")
         navigate("/")
