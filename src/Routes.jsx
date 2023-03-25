@@ -7,6 +7,7 @@ import Signup from "./pages/components/forms/signup"
 import NotFound from "./pages/404"
 import Profile from "./pages/Profile"
 import Chat from "./pages/Chat"
+import SearchResults from "./pages/SearchResults"
 
 export const BrowserRouter = createBrowserRouter([
     { path: "*", element: <NotFound /> },
@@ -17,4 +18,5 @@ export const BrowserRouter = createBrowserRouter([
     { path: "/home", element: <Home /> },
     { path: "/profile", element: <Profile /> },
     { path: "/chat", element: <Chat /> },
+    { path: "/search", element: <SearchResults /> },
 ])
