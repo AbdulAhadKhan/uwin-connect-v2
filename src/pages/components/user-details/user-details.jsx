@@ -1,15 +1,33 @@
+import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { IconContext } from "react-icons"
 import { HiOutlinePencilSquare } from "react-icons/hi2"
 
-import Kylie from "../../../assets/images/placeholder.png"
+import { getUserDetails } from "../../../api/users"
+import FallbackAvatar from "../FallbackAvatar"
 import './user-details.css'
 
+function UserAvatar({ imageID, id }) {
+    return (
+        <div className="user-details__avatar">
+            <FallbackAvatar id={id} square />
+        </div>
+    )
+}
+
 export default function UserDetails() {
+    const [user, setUser] = useState({})
+    const { id, domain } = JSON.parse(localStorage.getItem("sessionInfo"))
+
+    useQuery({
+        queryKey: ["user", `${id}@${domain}`],
+        queryFn: () => getUserDetails(email),
+        onSuccess: (response) => setUser(response.data),
+    })
+
     return (
         <div className="user-details">
-            <div className="user-details__avatar">
-                <img src={Kylie} alt="avatar" />
-            </div>
+            <UserAvatar id={id} />
             <div className="user-details__info">
                 <div className="user-details__edit">
                     <IconContext.Provider value={{ className: "user-details__edit-icon" }}>
