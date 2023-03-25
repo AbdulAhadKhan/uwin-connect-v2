@@ -73,8 +73,11 @@ function ProfileImage({ image_id, user_name }) {
 
 function Right() {
     const navigate = useNavigate()
-    const { email } = JSON.parse(localStorage.getItem("sessionInfo"))
+    const { id, domain } = JSON.parse(localStorage.getItem("sessionInfo"))
     const [user, setUser] = useState({firstname: "John", lastname: "Doe"})
+    const email = id + "@" + domain
+
+    console.log(email)
 
     const logout = () => {
         localStorage.removeItem("sessionInfo")
@@ -82,8 +85,8 @@ function Right() {
     }
     
     const toProfile = () => {
-        const params = createSearchParams({ email: email })
-        navigate({ pathname: "/profile", search: params.toString() })
+        const params = createSearchParams({ id: id })
+        navigate(`/profile/${id}`)
     }
 
     useQuery({
