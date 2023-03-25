@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom"
 
 import Navbar from "./components/navbar/navbar"
+import UserDetails from "./components/user-details/user-details"
 
 export default function Profile() {
     if (!localStorage.getItem("sessionInfo")) {
@@ -10,6 +11,7 @@ export default function Profile() {
     return (
         <div className="profile naved-page">
             <Navbar />
+            <UserDetails />
         </div>
     )
 }
