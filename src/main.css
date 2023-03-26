@@ -36,3 +36,8 @@ html, body {
 .naved-page {
     margin-top: 72px;
 }
+
+.tripple-grid {
+    display: grid;
+    grid-template-columns: [first] 30% [mid] 40% [last] 30%;
+}

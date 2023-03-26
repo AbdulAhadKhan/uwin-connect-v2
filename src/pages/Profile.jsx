@@ -6,6 +6,15 @@ import Navbar from "./components/navbar/navbar"
 import UserDetails from "./components/user-details/user-details"
 import { getUserDetails } from "../api/users"
 
+function ProfilePage({ user, id }) {
+    return (
+        <div className="naved-page profile-page tripple-grid">
+            <Navbar />
+            <UserDetails user={user} id={id} />
+        </div>
+    )
+}
+
 export default function Profile() {
     if (!localStorage.getItem("sessionInfo")) 
         return <Navigate to="/" />
@@ -18,15 +27,10 @@ export default function Profile() {
     useQuery({
         queryKey: ["user", email],
         queryFn: () => getUserDetails(email),
-        onSuccess: (response) => setPage(<UserDetails user={response.data} id={id} />),
+        onSuccess: (response) => setPage(<ProfilePage user={response.data} id={id} />),
         onError: () => setPage(<Navigate to="/404" />),
         retry: (failureCount, error) => error.response.status !== 404,
     })
     
-    return (
-        <div className="profile naved-page">
-            <Navbar />
-            {page}
-        </div>
-    )
+    return <>{page}</>
 }

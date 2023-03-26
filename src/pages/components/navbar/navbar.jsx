@@ -111,7 +111,7 @@ function Right() {
 
 export default function Navbar({ hideCreate, value }) {
     return (
-        <nav className="navbar">
+        <nav className="navbar tripple-grid">
             <Left hideCreate={hideCreate} />
             <Center value={value} />
             <Right />

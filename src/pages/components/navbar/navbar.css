@@ -8,8 +8,6 @@
     top: 0;
     left: 0;
     z-index: 100;
-    display: grid;
-    grid-template-columns: [first] 30% [mid] 40% [last] 30%;
 }
 
 .left {
