@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter, Navigate } from "react-router-dom"
 
 import Home from "./pages/Home"
 import Landing from "./pages/landing"
@@ -10,7 +10,8 @@ import Chat from "./pages/Chat"
 import SearchResults from "./pages/SearchResults"
 
 export const BrowserRouter = createBrowserRouter([
-    { path: "*", element: <NotFound /> },
+    { path: "/404", element: <NotFound /> },
+    { path: "*", element: <Navigate to="/404" /> },
     { path: "/", element: <Landing />, children: [
         { path: "/", element: <Login /> },
         { path: "/signup", element: <Signup /> },
