@@ -20,13 +20,13 @@ export default function UserDetails({user, id}) {
         <div className="user-details">
             <UserAvatar id={id} imageID={user.image} />
             <div className="user-details__info">
-                <div className="user-details__edit">
-                    {currentUser === id &&
+                {currentUser === id &&
+                    <div className="user-details__edit">
                         <IconContext.Provider value={{ className: "user-details__edit-icon" }}>
                             <HiOutlinePencilSquare />
                         </IconContext.Provider>
-                    }
-                </div>
+                    </div>
+                }
                 <h1 className="user-details__name">{user.firstname} {user.lastname}</h1>
                 <h2 className="user-details__email">{user.email}</h2>
                 <hr />
