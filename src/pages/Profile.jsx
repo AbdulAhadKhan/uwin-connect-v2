@@ -6,11 +6,15 @@ import Navbar from "./components/navbar/navbar"
 import UserDetails from "./components/user-details/user-details"
 import { getUserDetails } from "../api/users"
 
+import "./Profile.css"
+
 function ProfilePage({ user, id }) {
     return (
         <div className="naved-page profile-page tripple-grid">
             <Navbar />
-            <UserDetails user={user} id={id} />
+            <div className="profile-card-col">
+                <UserDetails user={user} id={id} />
+            </div>
         </div>
     )
 }
