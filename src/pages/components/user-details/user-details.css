@@ -65,6 +65,11 @@
     font-size: 1em;
     font-weight: 300;
     margin: 0;
+    display: block;
+}
+
+p.role-department::first-letter {
+    text-transform: uppercase;
 }
 
 .user-details hr {
@@ -90,4 +95,5 @@
     font-weight: 400;
     margin: 0;
     padding: 1.2em;
+    text-align: left;
 }

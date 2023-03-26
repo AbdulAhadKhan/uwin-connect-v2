@@ -14,26 +14,25 @@ function UserAvatar({ imageID, id }) {
 }
 
 export default function UserDetails({user, id}) {
+    const currentUser = JSON.parse(localStorage.getItem("sessionInfo")).id
+    
     return (
         <div className="user-details">
-            <UserAvatar id={id} imageID={user?.image} />
+            <UserAvatar id={id} imageID={user.image} />
             <div className="user-details__info">
                 <div className="user-details__edit">
-                    <IconContext.Provider value={{ className: "user-details__edit-icon" }}>
-                        <HiOutlinePencilSquare />
-                    </IconContext.Provider>
+                    {currentUser === id &&
+                        <IconContext.Provider value={{ className: "user-details__edit-icon" }}>
+                            <HiOutlinePencilSquare />
+                        </IconContext.Provider>
+                    }
                 </div>
-                <h1 className="user-details__name">Kylie Jenner</h1>
-                <h2 className="user-details__email">kyliejenner@uwindsor.ca</h2>
+                <h1 className="user-details__name">{user.firstname} {user.lastname}</h1>
+                <h2 className="user-details__email">{user.email}</h2>
                 <hr />
-                <p className="role-department" >Student | MA Economics</p>
+                <p className="role-department" >{user.role.designation || user.role.title} | {user.role.department}</p>
                 <div className="description">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Phasellus a molestie nunc, ultrices tristique enim. Maecenas 
-                        id magna tincidunt, tristique tellus id, laoreet dui. 
-                        Suspendisse egestas nisi.
-                    </p>
+                    <p>{user.description || "A valued member of UWindsor."}</p>
                 </div>
             </div>
         </div>
