@@ -10,13 +10,13 @@ import './user-details.css'
 
 function ImageOrAvatar({ imageSource, id }) {
     return (
-        <div>
+        <>
             {imageSource ? (
                 <img src={imageSource} alt='User Avatar' />
             ) : (
                 <FallbackAvatar id={id} square />
             )}
-        </div>
+        </>
     )
 }
 
