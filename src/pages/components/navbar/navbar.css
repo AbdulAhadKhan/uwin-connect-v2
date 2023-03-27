@@ -8,8 +8,6 @@
     top: 0;
     left: 0;
     z-index: 100;
-    display: grid;
-    grid-template-columns: [first] 30% [mid] 40% [last] 30%;
 }
 
 .left {
@@ -129,11 +127,6 @@
     width: 2.5rem;
     border-radius: 50%;
     object-fit: cover;
-}
-
-.navbar__profile .dropdown-icon {
-    color: #ffffff;
-    width: 1.5rem;
 }
 
 .navbar__profile .name-container {

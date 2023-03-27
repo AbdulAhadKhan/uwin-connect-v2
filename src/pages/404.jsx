@@ -1,8 +1,13 @@
-import { Player } from '@lottiefiles/react-lottie-player'
-import animation from '../assets/animations/404.json'
+import { Link } from 'react-router-dom'
+import lost from './../assets/images/404.svg'
 
 import './404.css'
 
 export default function NotFound() {
-    return <Player src={animation} autoplay loop className="animation" />
+    return (
+        <div className="page-404">
+            <img src={lost} alt="404" />
+            <p>You seem lost 🥺. <Link to="/">Let me help you!</Link></p>
+        </div>
+    )
 }

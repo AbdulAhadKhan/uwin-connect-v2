@@ -7,12 +7,14 @@ import './landing-card.css'
 
 function PrettyCard() {
     return (
-        <div className="image-container">
-            <img src={cafe} alt="cafe" className="cafe-image" />
-            <div className="logo-type">
-                <img src={UW_logo} alt="UW logo" />
+        <div className='image-container'>
+            <img src={cafe} alt='cafe' className='cafe-image' />
+            <div className='logo-type'>
+                <img src={UW_logo} alt='UW logo' />
                 <h1>UWin Connect</h1>
-                <h2><i>powerd by</i> Quantum Leap</h2>
+                <h2>
+                    <i>powered by</i> Quantum Leap
+                </h2>
             </div>
         </div>
     )
@@ -20,7 +22,7 @@ function PrettyCard() {
 
 function FormCard() {
     return (
-        <div className="landing-container">
+        <div className='landing-container'>
             <Outlet />
         </div>
     )
@@ -28,7 +30,7 @@ function FormCard() {
 
 export default function LandingCard() {
     return (
-        <div className="landing-card">
+        <div className='landing-card'>
             <PrettyCard />
             <FormCard />
         </div>
