@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
@@ -27,7 +27,7 @@ export default function Profile() {
     const { domain } = JSON.parse(localStorage.getItem('sessionInfo'))
     const email = `${id}@${domain}`
 
-    useQuery({
+    const { refetch, data } = useQuery({
         queryKey: ['user-profile', email],
         queryFn: () => getUserDetails(email),
         onSuccess: (response) =>
@@ -35,6 +35,10 @@ export default function Profile() {
         onError: () => setPage(<Navigate to='/404' />),
         retry: (failureCount, error) => error.response.status !== 404,
     })
+
+    useEffect(() => {
+        refetch()
+    }, [id])
 
     return <>{page}</>
 }

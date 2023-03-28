@@ -32,10 +32,7 @@ export default function Right() {
         navigate('/')
     }
 
-    const toProfile = () => {
-        navigate(`/profile/${id}`)
-        window.location.reload()
-    }
+    const toProfile = () => navigate(`/profile/${id}`)
 
     useQuery({
         queryKey: ['user', email],
