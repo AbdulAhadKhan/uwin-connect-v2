@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import { IconContext } from 'react-icons'
 import { HiOutlinePencilSquare, HiOutlineXCircle } from 'react-icons/hi2'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+
+import { putUserDetails } from '../../../api/users'
 
 export default function UserInformation({ user, editable }) {
+    const queryClient = useQueryClient()
     const [editing, setEditing] = useState(false)
     const [firstname, setFirstname] = useState(user.firstname)
     const [firstnameValid, setFirstnameValid] = useState(true)
@@ -31,6 +35,15 @@ export default function UserInformation({ user, editable }) {
 
     const changeMode = () => (editing ? cancelEdit() : setEditing(true))
 
+    const submitEdit = useMutation({
+        mutationFn: () =>
+            putUserDetails(user.email, { firstname, lastname, description }),
+        onSuccess: () => {
+            setEditing(false)
+            queryClient.invalidateQueries(['user-profile', user.email])
+        },
+    })
+
     return (
         <div className='user-details__info'>
             {editable && (
@@ -51,34 +64,36 @@ export default function UserInformation({ user, editable }) {
             )}
             {(editing && (
                 <>
-                    <input
-                        className='user-details__name-edit'
-                        type='text'
-                        placeholder='First Name'
-                        value={firstname}
-                        onChange={(event) =>
-                            changeEvent(
-                                event,
-                                20,
-                                setFirstname,
-                                setFirstnameValid
-                            )
-                        }
-                    />
-                    <input
-                        className='user-details__name-edit'
-                        type='text'
-                        placeholder='Last Name'
-                        value={lastname}
-                        onChange={(event) =>
-                            changeEvent(
-                                event,
-                                20,
-                                setLastname,
-                                setLastnameValid
-                            )
-                        }
-                    />
+                    <span className='user-details__name-edit'>
+                        <input
+                            className='first-name-edit'
+                            type='text'
+                            placeholder='First Name'
+                            value={firstname}
+                            onChange={(event) =>
+                                changeEvent(
+                                    event,
+                                    20,
+                                    setFirstname,
+                                    setFirstnameValid
+                                )
+                            }
+                        />
+                        <input
+                            className='last-name-edit'
+                            type='text'
+                            placeholder='Last Name'
+                            value={lastname}
+                            onChange={(event) =>
+                                changeEvent(
+                                    event,
+                                    20,
+                                    setLastname,
+                                    setLastnameValid
+                                )
+                            }
+                        />
+                    </span>
                 </>
             )) || (
                 <h1 className='user-details__name'>
@@ -112,17 +127,14 @@ export default function UserInformation({ user, editable }) {
             </div>
 
             {editing && (
-                <div className='user-details__save'>
-                    <button
-                        className='user-details__save-button'
-                        disabled={
-                            !firstnameValid ||
-                            !lastnameValid ||
-                            !descriptionValid
-                        }>
-                        Save
-                    </button>
-                </div>
+                <button
+                    className='save-edit-button'
+                    disabled={
+                        !firstnameValid || !lastnameValid || !descriptionValid
+                    }
+                    onClick={submitEdit.mutate}>
+                    Save
+                </button>
             )}
         </div>
     )
