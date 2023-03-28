@@ -13,10 +13,7 @@ function Result({ result }) {
     const getImageLink = (imageId) =>
         `http://localhost:8000/get-image/${imageId}`
 
-    const toProfile = () => {
-        navigate(`/profile/${id}`)
-        window.location.reload()
-    }
+    const toProfile = () => navigate(`/profile/${id}`)
 
     return (
         <div className='result' onClick={toProfile}>
