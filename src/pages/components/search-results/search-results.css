@@ -1,0 +1,100 @@
+.results-container {
+    width: 60vw;
+    max-height: 75vh !important;
+    height: fit-content;
+    margin-top: 4rem;
+    background-color: #fff;
+    box-shadow: 0px 0px 2.2px rgba(0, 0, 0, 0.003),
+        0px 0px 5.3px rgba(0, 0, 0, 0.011), 0px 0px 10px rgba(0, 0, 0, 0.024),
+        0px 0px 17.9px rgba(0, 0, 0, 0.044), 0px 0px 33.4px rgba(0, 0, 0, 0.075),
+        0px 0px 80px rgba(0, 0, 0, 0.16);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.results-container::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.results-container::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 0.5em;
+}
+
+.no-results {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-results h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    font-weight: 400;
+    margin: 0;
+    color: #000000;
+}
+
+.result {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    border-bottom: 2px solid #ececec;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.result:last-child {
+    border-bottom: none;
+}
+
+.result:hover {
+    background-color: #f0f0f0;
+}
+
+.result .search__image-container {
+    height: 70px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.result .search__image-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.result .search__info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 1rem;
+}
+
+.result .search__info-container h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+}
+
+.result .search__info-container h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+}

@@ -1,10 +1,7 @@
 .user-details {
     width: 20em;
     height: auto;
-    box-shadow: 0px 0px 5.1px rgba(0, 0, 0, 0.034),
-        0px 0px 10.6px rgba(0, 0, 0, 0.046), 0px 0px 17px rgba(0, 0, 0, 0.054),
-        0px 0px 25.8px rgba(0, 0, 0, 0.06), 0px 0px 41.4px rgba(0, 0, 0, 0.064),
-        0px 0px 80px rgba(0, 0, 0, 0.07);
+    box-shadow: var(--shadow-around);
     display: flex;
     flex-direction: column;
 }
