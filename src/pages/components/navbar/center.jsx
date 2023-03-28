@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, createSearchParams } from 'react-router-dom'
 import { BiSearchAlt } from 'react-icons/bi'
 
 export default function Center({ value }) {
