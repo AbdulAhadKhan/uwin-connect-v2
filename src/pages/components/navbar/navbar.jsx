@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { BiSearchAlt, BiMessageAlt } from 'react-icons/bi'
 import { HiOutlineLogout } from 'react-icons/hi'
-import { useNavigate, createSearchParams, Link } from 'react-router-dom'
+import { useNavigate, createSearchParams } from 'react-router-dom'
 
 import FallbackAvatar from '../FallbackAvatar'
 import { getUserDetails } from '../../../api/users'
@@ -81,6 +81,7 @@ function ProfileImage({ image_id }) {
 
 function Right() {
     const navigate = useNavigate()
+    const queryClient = useQueryClient()
     const { id, domain } = JSON.parse(localStorage.getItem('sessionInfo'))
     const [user, setUser] = useState({ firstname: 'John', lastname: 'Doe' })
     const email = id + '@' + domain
@@ -92,7 +93,7 @@ function Right() {
 
     const toProfile = () => {
         navigate(`/profile/${id}`)
-        window.location.reload()
+        queryClient.invalidateQueries(['user-profile', email])
     }
 
     useQuery({
