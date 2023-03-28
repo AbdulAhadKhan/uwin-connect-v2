@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, createSearchParams } from 'react-router-dom'
 import { BiSearchAlt } from 'react-icons/bi'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function Center({ value }) {
+    const queryClient = useQueryClient()
     const navigate = useNavigate()
     const [searchValue, setSearchValue] = useState(value || '')
 
@@ -14,6 +16,7 @@ export default function Center({ value }) {
         if (event.key === 'Enter' && event.target.value) {
             const params = createSearchParams({ query: event.target.value })
             event.target.blur()
+            queryClient.invalidateQueries('search')
             navigate({ pathname: '/search', search: params.toString() })
         }
     }

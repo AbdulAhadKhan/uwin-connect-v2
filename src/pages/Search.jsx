@@ -1,6 +1,7 @@
 import { Navigate, useSearchParams } from 'react-router-dom'
 
 import Navbar from './components/navbar/navbar'
+import SearchResults from './components/search-results/search-results'
 
 import './Search.css'
 
@@ -12,9 +13,9 @@ export default function Search() {
     }
 
     return (
-        <div className='chat naved-page'>
+        <div className='search naved-page'>
             <Navbar hideCreate value={searchParams.get('query')} />
-            <div className='container'></div>
+            <SearchResults query={searchParams.get('query')} />
         </div>
     )
 }

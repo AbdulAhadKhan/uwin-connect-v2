@@ -7,3 +7,7 @@ export function getUserDetails(email) {
 export function putUserDetails(email, data) {
     return instance.put(`/update-user/${email}`, data)
 }
+
+export function findUser(query) {
+    return instance.get(`/query-users/${query}`)
+}
