@@ -12,6 +12,15 @@
     overflow-y: auto;
 }
 
+.results-container::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.results-container::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 0.5em;
+}
+
 .no-results {
     width: 100%;
     height: 100px;
