@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { BsCheck, BsX } from 'react-icons/bs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
@@ -72,12 +72,16 @@ export default function UserAvatar({ imageID, id, editable }) {
     const generateImageLink = (iid) => `http://localhost:8000/get-image/${iid}`
     const iconProps = { size: '2em', color: '#454545' }
 
+    const [uploadImage, setUploadImage] = useState()
+    const [previewImage, setPreviewImage] = useState()
+
     const inputRef = useRef()
 
-    const [previewImage, setPreviewImage] = useState(
-        imageID ? generateImageLink(imageID) : ''
-    )
-    const [uploadImage, setUploadImage] = useState()
+    useEffect(() => {
+        if (imageID) {
+            setPreviewImage(generateImageLink(imageID))
+        }
+    }, [imageID])
 
     const handleImageChange = (event) => {
         if (event.target.files[0]) {
