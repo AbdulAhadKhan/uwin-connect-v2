@@ -1,12 +1,9 @@
 import { useState, useRef } from 'react'
-import { IconContext } from 'react-icons'
-import { HiOutlinePencilSquare } from 'react-icons/hi2'
 import { BsCheck, BsX } from 'react-icons/bs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { uploadProfileImage } from '../../../api/images'
 import FallbackAvatar from '../FallbackAvatar'
-import './user-details.css'
 
 function ImageOrAvatar({ imageSource, id }) {
     return (
@@ -68,7 +65,7 @@ function Avatar({ editable, inputRef, handleImageChange, previewImage, id }) {
     )
 }
 
-function UserAvatar({ imageID, id, editable }) {
+export default function UserAvatar({ imageID, id, editable }) {
     const queryClient = useQueryClient()
     const domain = JSON.parse(localStorage.getItem('sessionInfo')).domain
     const email = `${id}@${domain}`
@@ -90,7 +87,7 @@ function UserAvatar({ imageID, id, editable }) {
     }
 
     const handleCancel = () => {
-        setPreviewImage(imageLink)
+        setPreviewImage(generateImageLink(imageID))
         setUploadImage()
     }
 
@@ -100,11 +97,12 @@ function UserAvatar({ imageID, id, editable }) {
             formData.append('image', uploadImage)
             uploadProfileImage(formData, email)
         },
-        onSuccess: (response) => {
+        onSuccess: () => {
             setUploadImage()
-            setPreviewImage(generateImageLink(response.data))
         },
-        onSettled: () => queryClient.invalidateQueries(['user', email]),
+        onSettled: () => {
+            queryClient.invalidateQueries(['user', email])
+        },
     })
 
     return (
@@ -122,42 +120,6 @@ function UserAvatar({ imageID, id, editable }) {
                     </button>
                 </div>
             )}
-        </div>
-    )
-}
-
-export default function UserDetails({ user, id }) {
-    const currentUser = JSON.parse(localStorage.getItem('sessionInfo')).id
-
-    return (
-        <div className='user-details'>
-            <UserAvatar
-                id={id}
-                imageID={user.image}
-                editable={id === currentUser}
-            />
-            <div className='user-details__info'>
-                {currentUser === id && (
-                    <div className='user-details__edit'>
-                        <IconContext.Provider
-                            value={{ className: 'user-details__edit-icon' }}>
-                            <HiOutlinePencilSquare />
-                        </IconContext.Provider>
-                    </div>
-                )}
-                <h1 className='user-details__name'>
-                    {user.firstname} {user.lastname}
-                </h1>
-                <h2 className='user-details__email'>{user.email}</h2>
-                <hr />
-                <p className='role-department'>
-                    {user.role.designation || user.role.title} |{' '}
-                    {user.role.department}
-                </p>
-                <div className='description'>
-                    <p>{user.description || 'A valued member of UWindsor.'}</p>
-                </div>
-            </div>
         </div>
     )
 }

@@ -1,15 +1,12 @@
 .user-details {
     width: 20em;
     height: auto;
-    box-shadow:
-        0px 0px 5.1px rgba(0, 0, 0, 0.034),
-        0px 0px 10.6px rgba(0, 0, 0, 0.046),
-        0px 0px 17px rgba(0, 0, 0, 0.054),
-        0px 0px 25.8px rgba(0, 0, 0, 0.06),
-        0px 0px 41.4px rgba(0, 0, 0, 0.064),
+    box-shadow: 0px 0px 5.1px rgba(0, 0, 0, 0.034),
+        0px 0px 10.6px rgba(0, 0, 0, 0.046), 0px 0px 17px rgba(0, 0, 0, 0.054),
+        0px 0px 25.8px rgba(0, 0, 0, 0.06), 0px 0px 41.4px rgba(0, 0, 0, 0.064),
         0px 0px 80px rgba(0, 0, 0, 0.07);
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .avatar-container {
@@ -105,6 +102,11 @@ button.cancel {
     outline: none;
     cursor: pointer;
     border-radius: 5px;
+    z-index: 1;
+}
+
+.user-details__edit-icon.cancel {
+    color: #f08d8d;
 }
 
 .user-details__edit:hover {
@@ -118,7 +120,6 @@ button.cancel {
     color: #8f8f8f;
 }
 
-
 .user-details h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 1.5em;
@@ -127,7 +128,8 @@ button.cancel {
     margin-top: 1em;
 }
 
-.user-details h2, p.role-department {
+.user-details h2,
+p.role-department {
     font-family: 'Poppins', sans-serif;
     font-size: 1em;
     font-weight: 300;
@@ -153,14 +155,87 @@ p.role-department::first-letter {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #F0F0F0;
+    background-color: #f0f0f0;
 }
 
 .description p {
     font-family: 'Poppins', sans-serif;
     font-size: 0.8em;
     font-weight: 400;
+    text-align: left;
     margin: 0;
     padding: 1.2em;
+}
+
+.user-details__name-edit {
+    width: inherit;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+.user-details__name-edit input {
+    width: 100%;
+    height: 1.5em;
+    padding: 0;
+    margin: 0 0.5em;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    font-weight: 600;
+    background: transparent;
+    margin-top: 1em;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid #b4d3ed;
+}
+
+.user-details__name-edit input:focus {
+    border-color: #7aafdb;
+}
+
+.user-details__name-edit input::placeholder {
+    color: #8f8f8f;
+}
+
+.user-details__description-edit {
+    margin: 1.2em;
+    width: 16em;
+    height: 10em;
+    resize: vertical;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8em;
+    font-weight: 400;
     text-align: left;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid #b4d3ed;
+}
+
+.user-details__description-edit:focus {
+    border-color: #7aafdb;
+}
+
+.user-details__description-edit::placeholder {
+    color: #8f8f8f;
+}
+
+.save-edit-button {
+    background-color: #006fc3;
+    color: #eaeaea;
+    border: none;
+    outline: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 1em;
+}
+
+.save-edit-button:hover {
+    background-color: #005a9e;
 }
