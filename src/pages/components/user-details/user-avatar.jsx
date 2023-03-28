@@ -97,11 +97,12 @@ export default function UserAvatar({ imageID, id, editable }) {
             formData.append('image', uploadImage)
             uploadProfileImage(formData, email)
         },
-        onSuccess: (response) => {
+        onSuccess: () => {
             setUploadImage()
-            setPreviewImage(generateImageLink(response.data))
         },
-        onSettled: () => queryClient.invalidateQueries(['user', email]),
+        onSettled: () => {
+            queryClient.invalidateQueries(['user', email])
+        },
     })
 
     return (
