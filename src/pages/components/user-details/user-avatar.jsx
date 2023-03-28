@@ -87,7 +87,7 @@ export default function UserAvatar({ imageID, id, editable }) {
     }
 
     const handleCancel = () => {
-        setPreviewImage(imageLink)
+        setPreviewImage(generateImageLink(imageID))
         setUploadImage()
     }
 
