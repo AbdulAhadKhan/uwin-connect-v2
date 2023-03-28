@@ -21,16 +21,12 @@ function ProfileImage({ image_id }) {
     )
 }
 
-export default function Right() {
+export function NameTag() {
     const navigate = useNavigate()
+
     const { id, domain } = JSON.parse(localStorage.getItem('sessionInfo'))
     const [user, setUser] = useState({ firstname: 'John', lastname: 'Doe' })
     const email = id + '@' + domain
-
-    const logout = () => {
-        localStorage.removeItem('sessionInfo')
-        navigate('/')
-    }
 
     const toProfile = () => navigate(`/profile/${id}`)
 
@@ -39,6 +35,31 @@ export default function Right() {
         queryFn: () => getUserDetails(email),
         onSuccess: (response) => setUser(response.data),
     })
+
+    return (
+        <div className='navbar__profile' onClick={toProfile}>
+            <ProfileImage
+                user_name={id}
+                className='profile-image'
+                image_id={user?.image}
+            />
+            <div className='name-container'>
+                <div className='name'>
+                    {user?.firstname + ' ' + user?.lastname}
+                </div>
+                <div className='email'>{user?.email}</div>
+            </div>
+        </div>
+    )
+}
+
+export default function Right() {
+    const navigate = useNavigate()
+
+    const logout = () => {
+        localStorage.removeItem('sessionInfo')
+        navigate('/')
+    }
 
     return (
         <div className='right'>
@@ -52,19 +73,7 @@ export default function Right() {
                 size={'1.25em'}
                 onClick={() => navigate('/chat')}
             />
-            <div className='navbar__profile' onClick={toProfile}>
-                <ProfileImage
-                    user_name={id}
-                    className='profile-image'
-                    image_id={user?.image}
-                />
-                <div className='name-container'>
-                    <div className='name'>
-                        {user?.firstname + ' ' + user?.lastname}
-                    </div>
-                    <div className='email'>{user?.email}</div>
-                </div>
-            </div>
+            <NameTag />
         </div>
     )
 }
