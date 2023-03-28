@@ -11,7 +11,7 @@ export default function Center({ value }) {
     }, [])
 
     function onEnter(event) {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && event.target.value) {
             const params = createSearchParams({ query: event.target.value })
             event.target.blur()
             navigate({ pathname: '/search', search: params.toString() })
