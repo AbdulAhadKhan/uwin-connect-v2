@@ -56,7 +56,7 @@ function CreatePost({ setOpen, mutate }) {
     return (
         <div className='content-container'>
             <div className='modal-header'>
-                <NameTag />
+                <NameTag email={email} id={id} />
             </div>
             <IconContext.Provider value={{ className: 'close-icon' }}>
                 <GrFormClose

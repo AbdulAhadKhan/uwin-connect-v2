@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import Navbar from './components/navbar/navbar'
 import UserCard from './components/user-details/user-card'
+import PostCard from './components/post-card/post-card'
 import { getUserDetails } from '../api/users'
 
 import './Profile.css'
@@ -14,6 +15,9 @@ function ProfilePage({ user, id }) {
             <Navbar />
             <div className='profile-card-col'>
                 <UserCard user={user} id={id} />
+            </div>
+            <div className='post-col'>
+                <PostCard user={user} />
             </div>
         </div>
     )
