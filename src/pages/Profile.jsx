@@ -17,7 +17,9 @@ function ProfilePage({ user, id }) {
                 <UserCard user={user} id={id} />
             </div>
             <div className='post-col'>
-                <PostCard user={user} />
+                <div className='post-card-container'>
+                    <PostCard user={user} />
+                </div>
             </div>
         </div>
     )
