@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, createSearchParams } from 'react-router-dom'
 import { BiSearchAlt } from 'react-icons/bi'
 import { useQueryClient } from '@tanstack/react-query'
@@ -7,10 +7,6 @@ export default function Center({ value }) {
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const [searchValue, setSearchValue] = useState(value || '')
-
-    useEffect(() => {
-        setSearchValue(value)
-    }, [])
 
     function onEnter(event) {
         if (event.key === 'Enter' && event.target.value) {
