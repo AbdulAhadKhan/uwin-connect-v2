@@ -87,6 +87,11 @@
     background-color: #005a9c;
 }
 
+.modal-container .content-container .modal-footer .modal-button.deactivated {
+    background-color: #959595;
+    cursor: not-allowed;
+}
+
 .modal-container .content-container .modal-footer .image-container {
     display: flex;
     justify-content: flex-start;

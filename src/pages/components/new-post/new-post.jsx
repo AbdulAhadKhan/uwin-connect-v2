@@ -9,15 +9,17 @@ import { NameTag } from '../navbar/right'
 import './new-post.css'
 
 export default function NewPostModal({ setOpen }) {
+    const id = JSON.parse(localStorage.getItem('sessionInfo')).id
+    const domain = JSON.parse(localStorage.getItem('sessionInfo')).domain
+    const email = id + '@' + domain
+
     const [description, setDescription] = useState('')
     const [descriptionIsValid, setDescriptionIsValid] = useState(false)
     const [imageName, setImageName] = useState('Add an image')
     const [image, setImage] = useState(null)
 
-    console.log(image)
-    console.log(imageName)
-
     const inputRef = useRef()
+
     const handleClick = () => {
         if (image === null) inputRef.current.click()
         else {
@@ -34,10 +36,18 @@ export default function NewPostModal({ setOpen }) {
     }
 
     const descriptionValid = (event) => {
-        if (event.target.value.length <= 280 || event.target.value.length > 0) {
+        if (event.target.value.length > 0 && event.target.value.length <= 280) {
             setDescriptionIsValid(true)
         } else setDescriptionIsValid(false)
         setDescription(event.target.value)
+    }
+
+    const submitPost = () => {
+        const formData = new FormData()
+        formData.append('description', description)
+        formData.append('image', image)
+        formData.append('email', email)
+        formData.append('timestamp', Date.now())
     }
 
     return (
@@ -75,7 +85,14 @@ export default function NewPostModal({ setOpen }) {
                                 </span>
                             </IconContext.Provider>
                         </div>
-                        <button className='modal-button'>Post</button>
+                        <button
+                            className={`modal-button ${
+                                descriptionIsValid ? '' : 'deactivated'
+                            }`}
+                            disabled={!descriptionIsValid}
+                            onClick={submitPost}>
+                            Post
+                        </button>
                         <input
                             type='file'
                             id='post-image'
