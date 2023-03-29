@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react'
+import { useMutation } from '@tanstack/react-query'
 
 import { IconContext } from 'react-icons'
 import { GrFormClose } from 'react-icons/gr'
 import { HiOutlinePhotograph } from 'react-icons/hi'
 
 import { NameTag } from '../navbar/right'
+import { createNewPost } from '../../../api/posts'
 
 import './new-post.css'
 
@@ -19,6 +21,11 @@ export default function NewPostModal({ setOpen }) {
     const [image, setImage] = useState(null)
 
     const inputRef = useRef()
+
+    const { mutate } = useMutation({
+        mutationFn: (formData) => createNewPost(formData),
+        onSuccess: () => setOpen(false),
+    })
 
     const handleClick = () => {
         if (image === null) inputRef.current.click()
@@ -48,6 +55,7 @@ export default function NewPostModal({ setOpen }) {
         formData.append('image', image)
         formData.append('email', email)
         formData.append('timestamp', Date.now())
+        mutate(formData)
     }
 
     return (
