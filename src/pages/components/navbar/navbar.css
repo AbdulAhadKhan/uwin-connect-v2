@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #151A24;
+    background-color: #151a24;
     color: #f6f6f6;
     width: 100vw;
     height: 48px;
@@ -73,7 +73,7 @@
 }
 
 .navbar__search {
-    background-color: #2D2F3A;
+    background-color: #2d2f3a;
     width: 90%;
     height: 2rem;
     border-radius: 0.5rem;
@@ -107,7 +107,7 @@
 
 .navbar__search .search-container::placeholder {
     color: #8b8d97;
-} 
+}
 
 .navbar__search .search-container .search-icon {
     color: #8b8d97;
@@ -115,6 +115,7 @@
 }
 
 .navbar__profile {
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -137,7 +138,6 @@
     line-height: 1.2rem;
 }
 
-
 .navbar__profile .name-container .name {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -154,7 +154,8 @@
     padding: 0;
 }
 
-.navbar .message-icon, .navbar .logout-icon {
+.navbar .message-icon,
+.navbar .logout-icon {
     color: #ffffff;
     margin-right: 1.5rem;
     cursor: pointer;
