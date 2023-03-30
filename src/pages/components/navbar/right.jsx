@@ -8,14 +8,14 @@ import FallbackAvatar from '../FallbackAvatar'
 
 import { getUserDetails } from '../../../api/users'
 
-function ProfileImage({ image_id, id }) {
+function ProfileImage({ image_id, email }) {
     return image_id ? (
         <img
             src={`http://localhost:8000/get-image/${image_id}`}
             className='profile-image'
         />
     ) : (
-        <FallbackAvatar id={id} className='fallback-avatar' size='40' />
+        <FallbackAvatar id={email} className='fallback-avatar' size='40' />
     )
 }
 
@@ -34,7 +34,7 @@ export function NameTag({ email }) {
     return (
         <div className='navbar__profile' onClick={toProfile}>
             <ProfileImage
-                id={id}
+                email={email}
                 className='profile-image'
                 image_id={user?.image}
             />
