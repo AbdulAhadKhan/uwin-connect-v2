@@ -1,29 +1,15 @@
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
+import PostCardGenerator from './components/post-card/post-card-generator'
 import Navbar from './components/navbar/navbar'
 import UserCard from './components/user-details/user-card'
-import PostCard from './components/post-card/post-card'
 import { getUserDetails } from '../api/users'
 import { getUserPostsByTimestamp } from '../api/posts'
 
 import './Profile.css'
-
-function PostCardGenerator({ data, fetchNextPage, hasNextPage }) {
-    return (
-        <>
-            {data.pages &&
-                data.pages
-                    .flatMap((page) => page.data.posts)
-                    .map((post) => <PostCard key={post._id} post={post} />)}
-            {hasNextPage && (
-                <button onClick={() => fetchNextPage()}>Load More</button>
-            )}
-        </>
-    )
-}
-
 function ProfilePage({ user, id }) {
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
         queryKey: ['user-posts', user.email],
@@ -65,7 +51,7 @@ export default function Profile() {
     const { domain } = JSON.parse(localStorage.getItem('sessionInfo'))
     const email = `${id}@${domain}`
 
-    const { refetch, data } = useQuery({
+    const { refetch } = useQuery({
         queryKey: ['user-profile', email],
         queryFn: () => getUserDetails(email),
         onSuccess: (response) =>
