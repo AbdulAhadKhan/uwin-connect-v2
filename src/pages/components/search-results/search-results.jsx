@@ -37,7 +37,7 @@ function Result({ result }) {
 export default function SearchResults({ query }) {
     const [results, setResults] = useState([])
 
-    const { isLoading, isSuccess } = useQuery({
+    const { isFetching } = useQuery({
         queryKey: ['search', query],
         queryFn: () => findUser(query),
         onSuccess: (response) => {
@@ -49,10 +49,10 @@ export default function SearchResults({ query }) {
 
     return (
         <div className='results-container'>
-            {((results.length === 0 || isLoading) && (
+            {((results.length === 0 || isFetching) && (
                 <div className='no-results'>
                     <h2>
-                        {isLoading && !isSuccess
+                        {isFetching
                             ? 'Searching... 🤔'
                             : `No results found for "${query}" 🥺`}
                     </h2>

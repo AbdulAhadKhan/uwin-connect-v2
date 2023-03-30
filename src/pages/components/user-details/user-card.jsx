@@ -3,17 +3,25 @@ import UserInformation from './user-information'
 
 import './user-card.css'
 
-export default function UserCard({ user, id }) {
-    const currentUser = JSON.parse(localStorage.getItem('sessionInfo')).id
-
+export default function UserCard({
+    user,
+    editable,
+    areFriends,
+    currentUserEmail,
+}) {
     return (
         <div className='user-details'>
             <UserAvatar
                 imageID={user.image}
                 email={user.email}
-                editable={id === currentUser}
+                editable={editable}
             />
-            <UserInformation user={user} editable={id === currentUser} />
+            <UserInformation
+                user={user}
+                editable={editable}
+                areFriends={areFriends}
+                currentUserEmail={currentUserEmail}
+            />
         </div>
     )
 }

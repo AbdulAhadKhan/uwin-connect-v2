@@ -1,11 +1,21 @@
 import { useState } from 'react'
 import { IconContext } from 'react-icons'
-import { HiOutlinePencilSquare, HiOutlineXCircle } from 'react-icons/hi2'
+import {
+    HiOutlinePencilSquare,
+    HiOutlineXCircle,
+    HiUserPlus,
+    HiUserMinus,
+} from 'react-icons/hi2'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { putUserDetails } from '../../../api/users'
+import { putUserDetails, addFriend, removeFriend } from '../../../api/users'
 
-export default function UserInformation({ user, editable }) {
+export default function UserInformation({
+    user,
+    editable,
+    areFriends,
+    currentUserEmail,
+}) {
     const queryClient = useQueryClient()
     const [editing, setEditing] = useState(false)
     const [firstname, setFirstname] = useState(user.firstname)
@@ -14,6 +24,9 @@ export default function UserInformation({ user, editable }) {
     const [lastnameValid, setLastnameValid] = useState(true)
     const [description, setDescription] = useState(user.description)
     const [descriptionValid, setDescriptionValid] = useState(true)
+    const [hideAdd, setHideAdd] = useState(areFriends)
+
+    console.log('user', currentUserEmail)
 
     const changeEvent = (event, limit, setter, validator) => {
         if (
@@ -44,13 +57,21 @@ export default function UserInformation({ user, editable }) {
         },
     })
 
+    const mutation = useMutation({
+        mutationFn: (action) => action(currentUserEmail, user.email),
+        onSuccess: () => {
+            setHideAdd(!hideAdd)
+            queryClient.invalidateQueries(['user-profile', user.email])
+        },
+    })
+
     return (
         <div className='user-details__info'>
-            {editable && (
-                <div className='user-details__edit' onClick={changeMode}>
+            {(editable && (
+                <div className='user-details__action edit' onClick={changeMode}>
                     <IconContext.Provider
                         value={{
-                            className: `user-details__edit-icon ${
+                            className: `user-details__action-icon edit ${
                                 editing ? 'cancel' : ''
                             }`,
                         }}>
@@ -61,8 +82,32 @@ export default function UserInformation({ user, editable }) {
                         )}
                     </IconContext.Provider>
                 </div>
-            )}
-            {(editing && (
+            )) ||
+                (!hideAdd && !editable && (
+                    <div
+                        className='user-details__action add'
+                        onClick={() => mutation.mutate(addFriend)}>
+                        <IconContext.Provider
+                            value={{
+                                className: 'user-details__action-icon add',
+                            }}>
+                            <HiUserPlus />
+                        </IconContext.Provider>
+                    </div>
+                )) ||
+                (hideAdd && !editable && (
+                    <div
+                        className='user-details__action remove'
+                        onClick={() => mutation.mutate(removeFriend)}>
+                        <IconContext.Provider
+                            value={{
+                                className: 'user-details__action-icon remove',
+                            }}>
+                            <HiUserMinus />
+                        </IconContext.Provider>
+                    </div>
+                ))}
+            {(editing && editable && (
                 <>
                     <span className='user-details__name-edit'>
                         <input
@@ -108,7 +153,7 @@ export default function UserInformation({ user, editable }) {
             </p>
 
             <div className='description'>
-                {(editing && (
+                {(editing && editable && (
                     <textarea
                         className='user-details__description-edit'
                         type='text'
@@ -126,7 +171,7 @@ export default function UserInformation({ user, editable }) {
                 )}
             </div>
 
-            {editing && (
+            {editing && editable && (
                 <button
                     className='save-edit-button'
                     disabled={

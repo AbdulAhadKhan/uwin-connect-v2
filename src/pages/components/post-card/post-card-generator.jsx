@@ -22,7 +22,7 @@ export default function PostCardGenerator({
             {data.pages &&
                 data.pages
                     .flatMap((page) => page.data.posts)
-                    .map((post) => <PostCard key={post._id} post={post} />)}
+                    .map((post) => <PostCard key={post.id} post={post} />)}
             {hasNextPage && <div ref={ref} className='load-more' />}
         </>
     )

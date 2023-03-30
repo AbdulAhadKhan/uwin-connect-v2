@@ -84,6 +84,8 @@ export default function UserAvatar({ imageID, email, editable }) {
     useEffect(() => {
         if (imageID) {
             setPreviewImage(generateImageLink(imageID))
+        } else {
+            setPreviewImage()
         }
     }, [imageID])
 
