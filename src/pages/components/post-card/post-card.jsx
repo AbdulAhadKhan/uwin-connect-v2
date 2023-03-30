@@ -10,7 +10,6 @@ import testImage from '../../../assets/images/placeholder.png'
 import './post-card.css'
 
 export default function PostCard({ post }) {
-    console.log(post)
     const { dateFull, timeFull } = unixTimeToDateTime(post.timestamp)
 
     return (

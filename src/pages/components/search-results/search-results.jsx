@@ -41,11 +41,9 @@ export default function SearchResults({ query }) {
         queryKey: ['search', query],
         queryFn: () => findUser(query),
         onSuccess: (response) => {
-            console.log(response.data)
             if (response.data.length > 0) setResults(response.data)
             else setResults([])
         },
-        onFail: (error) => console.log(error),
         retry: (failureCount, error) => error.response.status !== 404,
     })
 

@@ -44,8 +44,6 @@ export function unixTimeToDateTime(unixTime) {
     const dateFull = `${date[0].value}, ${date[4].value}, ${date[6].value}`
     const timeFull = `${date[8].value}:${date[10].value} ${date[12].value}`
 
-    console.log(date)
-
     return {
         date,
         dateFull,
