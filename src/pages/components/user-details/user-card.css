@@ -124,7 +124,12 @@ button.cancel {
     background-color: #c5e7c0;
 }
 
-.user-details__action-icon.add {
+.user-details__action.remove {
+    background-color: #e7c0c4;
+}
+
+.user-details__action-icon.add,
+.user-details__action-icon.remove {
     color: #444444;
 }
 

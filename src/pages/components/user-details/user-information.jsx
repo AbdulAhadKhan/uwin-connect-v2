@@ -4,12 +4,18 @@ import {
     HiOutlinePencilSquare,
     HiOutlineXCircle,
     HiUserPlus,
+    HiUserMinus,
 } from 'react-icons/hi2'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { putUserDetails } from '../../../api/users'
+import { putUserDetails, addFriend, removeFriend } from '../../../api/users'
 
-export default function UserInformation({ user, editable, areFriends }) {
+export default function UserInformation({
+    user,
+    editable,
+    areFriends,
+    currentUserEmail,
+}) {
     const queryClient = useQueryClient()
     const [editing, setEditing] = useState(false)
     const [firstname, setFirstname] = useState(user.firstname)
@@ -18,6 +24,9 @@ export default function UserInformation({ user, editable, areFriends }) {
     const [lastnameValid, setLastnameValid] = useState(true)
     const [description, setDescription] = useState(user.description)
     const [descriptionValid, setDescriptionValid] = useState(true)
+    const [hideAdd, setHideAdd] = useState(areFriends)
+
+    console.log('user', currentUserEmail)
 
     const changeEvent = (event, limit, setter, validator) => {
         if (
@@ -48,6 +57,14 @@ export default function UserInformation({ user, editable, areFriends }) {
         },
     })
 
+    const mutation = useMutation({
+        mutationFn: (action) => action(currentUserEmail, user.email),
+        onSuccess: () => {
+            setHideAdd(!hideAdd)
+            queryClient.invalidateQueries(['user-profile', user.email])
+        },
+    })
+
     return (
         <div className='user-details__info'>
             {(editable && (
@@ -66,13 +83,27 @@ export default function UserInformation({ user, editable, areFriends }) {
                     </IconContext.Provider>
                 </div>
             )) ||
-                (!areFriends && !editable && (
-                    <div className='user-details__action add'>
+                (!hideAdd && !editable && (
+                    <div
+                        className='user-details__action add'
+                        onClick={() => mutation.mutate(addFriend)}>
                         <IconContext.Provider
                             value={{
                                 className: 'user-details__action-icon add',
                             }}>
                             <HiUserPlus />
+                        </IconContext.Provider>
+                    </div>
+                )) ||
+                (hideAdd && !editable && (
+                    <div
+                        className='user-details__action remove'
+                        onClick={() => mutation.mutate(removeFriend)}>
+                        <IconContext.Provider
+                            value={{
+                                className: 'user-details__action-icon remove',
+                            }}>
+                            <HiUserMinus />
                         </IconContext.Provider>
                     </div>
                 ))}

@@ -3,7 +3,12 @@ import UserInformation from './user-information'
 
 import './user-card.css'
 
-export default function UserCard({ user, editable, areFriends }) {
+export default function UserCard({
+    user,
+    editable,
+    areFriends,
+    currentUserEmail,
+}) {
     return (
         <div className='user-details'>
             <UserAvatar
@@ -15,6 +20,7 @@ export default function UserCard({ user, editable, areFriends }) {
                 user={user}
                 editable={editable}
                 areFriends={areFriends}
+                currentUserEmail={currentUserEmail}
             />
         </div>
     )

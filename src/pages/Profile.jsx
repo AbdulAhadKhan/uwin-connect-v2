@@ -64,6 +64,7 @@ function ProfilePage({ user, id }) {
                     user={user}
                     editable={isUser}
                     areFriends={areFriends}
+                    currentUserEmail={currentUserEmail}
                 />
             </div>
             <div className='post-col'>
