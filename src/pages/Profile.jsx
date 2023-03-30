@@ -13,7 +13,7 @@ import './Profile.css'
 function ProfilePage({ user, id }) {
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
         queryKey: ['user-posts', user.email],
-        queryFn: ({ pageParam = 1020 }) => {
+        queryFn: ({ pageParam = Date.now() }) => {
             return getUserPostsByTimestamp(user.email, pageParam, 2)
         },
         getNextPageParam: (lastPage, pages) => {
