@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { IconContext } from 'react-icons'
 import { GrFormClose } from 'react-icons/gr'
@@ -14,6 +14,8 @@ function CreatePost({ setOpen, mutate }) {
     const id = JSON.parse(localStorage.getItem('sessionInfo')).id
     const domain = JSON.parse(localStorage.getItem('sessionInfo')).domain
     const email = id + '@' + domain
+
+    const queryClient = useQueryClient()
 
     const [description, setDescription] = useState('')
     const [descriptionIsValid, setDescriptionIsValid] = useState(false)
@@ -51,6 +53,7 @@ function CreatePost({ setOpen, mutate }) {
         formData.append('email', email)
         formData.append('timestamp', Date.now())
         mutate(formData)
+        queryClient.invalidateQueries(['user-posts', email])
     }
 
     return (
