@@ -7,3 +7,9 @@ export function createNewPost(data) {
         },
     })
 }
+
+export function getUserPostsByTimestamp(email, nextTimestamp, pageSize) {
+    return instance.get(
+        `/get-posts/${email}?next_timestamp=${nextTimestamp}&page_size=${pageSize}`
+    )
+}
