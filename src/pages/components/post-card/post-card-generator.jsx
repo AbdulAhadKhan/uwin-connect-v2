@@ -11,8 +11,6 @@ export default function PostCardGenerator({
     const ref = useRef()
     const isVisible = useIsVisible(ref)
 
-    console.log('isVisible ', isVisible)
-
     useEffect(() => {
         if (isVisible) {
             fetchNextPage()
