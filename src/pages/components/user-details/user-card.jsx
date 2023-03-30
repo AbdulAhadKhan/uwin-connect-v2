@@ -8,7 +8,11 @@ export default function UserCard({ user, id }) {
 
     return (
         <div className='user-details'>
-            <UserAvatar imageID={user.image} editable={id === currentUser} />
+            <UserAvatar
+                imageID={user.image}
+                email={user.email}
+                editable={id === currentUser}
+            />
             <UserInformation user={user} editable={id === currentUser} />
         </div>
     )
