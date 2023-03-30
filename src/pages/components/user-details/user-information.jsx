@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { IconContext } from 'react-icons'
-import { HiOutlinePencilSquare, HiOutlineXCircle } from 'react-icons/hi2'
+import {
+    HiOutlinePencilSquare,
+    HiOutlineXCircle,
+    HiUserPlus,
+} from 'react-icons/hi2'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { putUserDetails } from '../../../api/users'
@@ -46,11 +50,11 @@ export default function UserInformation({ user, editable }) {
 
     return (
         <div className='user-details__info'>
-            {editable && (
-                <div className='user-details__edit' onClick={changeMode}>
+            {(editable && (
+                <div className='user-details__action edit' onClick={changeMode}>
                     <IconContext.Provider
                         value={{
-                            className: `user-details__edit-icon ${
+                            className: `user-details__action-icon edit ${
                                 editing ? 'cancel' : ''
                             }`,
                         }}>
@@ -59,6 +63,15 @@ export default function UserInformation({ user, editable }) {
                         ) : (
                             <HiOutlinePencilSquare />
                         )}
+                    </IconContext.Provider>
+                </div>
+            )) || (
+                <div className='user-details__action add' onClick={changeMode}>
+                    <IconContext.Provider
+                        value={{
+                            className: 'user-details__action-icon add',
+                        }}>
+                        <HiUserPlus />
                     </IconContext.Provider>
                 </div>
             )}
