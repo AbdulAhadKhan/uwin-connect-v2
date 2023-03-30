@@ -25,49 +25,29 @@ export async function getSHA256Hash(input) {
 }
 
 export function unixTimeToDateTime(unixTime) {
-    const date = new Date(1680073326723)
-    const months = [
-        'Janurary',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ]
-    const weekDays = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-    ]
+    const locale = Intl.DateTimeFormat().resolvedOptions().locale
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        hour12: true,
+        minute: 'numeric',
+        timeZone: timezone,
+        locale: locale,
+    }
+    const date = Intl.DateTimeFormat(locale, options).formatToParts(
+        new Date(unixTime)
+    )
+    const dateFull = `${date[0].value}, ${date[4].value}, ${date[6].value}`
+    const timeFull = `${date[8].value}:${date[10].value} ${date[12].value}`
 
-    const weekDay = weekDays[date.getDay()]
-    const month = months[date.getMonth()]
-    const year = date.getFullYear()
-    const monthDay = date.getDate()
-    const hours = date.getHours() % 12
-    const minutes = date.getMinutes()
-    const ampm = date.getHours() >= 12 ? 'PM' : 'AM'
-    const dateFull = `${month}, ${monthDay}, ${year}`
-    const timeFull = `${hours}:${minutes.toString().padStart(2, 0)} ${ampm}`
+    console.log(date)
 
     return {
-        weekDay,
-        monthDay,
-        month,
-        year,
-        hours,
-        minutes,
-        ampm,
+        date,
         dateFull,
         timeFull,
     }
