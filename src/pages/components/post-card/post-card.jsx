@@ -10,36 +10,36 @@ import testImage from '../../../assets/images/placeholder.png'
 import './post-card.css'
 
 export default function PostCard({ post }) {
-    const { dateFull, timeFull } = unixTimeToDateTime(1680073326723)
+    console.log(post)
+    const { dateFull, timeFull } = unixTimeToDateTime(post.timestamp)
 
     return (
         <div className='post-card'>
-            <div className='post-image-container'>
-                <img src={testImage} alt='profile' />
-            </div>
+            {post.image && (
+                <div className='post-image-container'>
+                    <img
+                        src={`http://localhost:8000/get-image/${post.image}`}
+                        alt='profile'
+                    />
+                </div>
+            )}
             <div className='post-card-header'>
-                <NameTag email={'abdulahadkhan@uwindsor.ca'} />
+                <NameTag email={post.email} />
                 <div className='post-card-header-date'>
                     {dateFull} <br />
                     {timeFull}
                 </div>
             </div>
             <div className='post-card-body'>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam sapien risus, scelerisque eu cursus vitae, bibendum
-                    in justo. Integer et tincidunt magna. Duis fermentum laoreet
-                    accumsan. Nunc diam lectus, mattis in sollicitudin
-                    tincidunt, iaculis quis magna. Curabitur vel proin.
-                </p>
+                <p>{post.description}</p>
             </div>
             <div className='post-card-footer two-col'>
                 <div className='post-card-footer-left'>
-                    <p>70 comments</p>
+                    <p>{post.comments ? post.comments.length : 0} comments</p>
                 </div>
                 <div className='post-card-footer-right'>
                     <div className='interaction-container'>
-                        <p>70 likes</p>
+                        <p>{post.likes ? post.likes.length : 0} likes</p>
                         <IconContext.Provider
                             value={{ className: 'post-icon' }}>
                             <AiOutlineLike />
