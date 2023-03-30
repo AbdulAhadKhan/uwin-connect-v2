@@ -17,7 +17,7 @@ function ImageOrAvatar({ imageSource, email }) {
     )
 }
 
-function ImageSlector({ inputRef, handleImageChange, previewImage, id }) {
+function ImageSlector({ inputRef, handleImageChange, previewImage, email }) {
     const [mouseOver, setMouseOver] = useState(false)
     const handleClick = () => inputRef.current.click()
 
@@ -41,12 +41,18 @@ function ImageSlector({ inputRef, handleImageChange, previewImage, id }) {
                     <h1 className=''>Change Image</h1>
                 </div>
             )}
-            <ImageOrAvatar imageSource={previewImage} id={id} />
+            <ImageOrAvatar imageSource={previewImage} email={email} />
         </div>
     )
 }
 
-function Avatar({ editable, inputRef, handleImageChange, previewImage, id }) {
+function Avatar({
+    editable,
+    inputRef,
+    handleImageChange,
+    previewImage,
+    email,
+}) {
     return (
         <>
             {(editable && (
@@ -54,11 +60,11 @@ function Avatar({ editable, inputRef, handleImageChange, previewImage, id }) {
                     inputRef={inputRef}
                     handleImageChange={handleImageChange}
                     previewImage={previewImage}
-                    id={id}
+                    email={email}
                 />
             )) || (
                 <div className='user-details__avatar'>
-                    <ImageOrAvatar imageSource={previewImage} id={id} />
+                    <ImageOrAvatar imageSource={previewImage} email={email} />
                 </div>
             )}
         </>

@@ -21,7 +21,7 @@ function Result({ result }) {
                 {result.image ? (
                     <img src={getImageLink(result.image)} />
                 ) : (
-                    <FallbackAvatar id={id} size='40' />
+                    <FallbackAvatar id={result.email} size='40' />
                 )}
             </div>
             <div className='search__info-container'>
@@ -37,7 +37,7 @@ function Result({ result }) {
 export default function SearchResults({ query }) {
     const [results, setResults] = useState([])
 
-    const { isLoading } = useQuery({
+    const { isLoading, isSuccess } = useQuery({
         queryKey: ['search', query],
         queryFn: () => findUser(query),
         onSuccess: (response) => {
@@ -52,7 +52,7 @@ export default function SearchResults({ query }) {
             {((results.length === 0 || isLoading) && (
                 <div className='no-results'>
                     <h2>
-                        {isLoading
+                        {isLoading && !isSuccess
                             ? 'Searching... 🤔'
                             : `No results found for "${query}" 🥺`}
                     </h2>
