@@ -18,10 +18,7 @@ export default function PostCard({ post }) {
                 <img src={testImage} alt='profile' />
             </div>
             <div className='post-card-header'>
-                <NameTag
-                    email={'abdulahadkhan@uwindsor.ca'}
-                    id={'abdulahadkhan'}
-                />
+                <NameTag email={'abdulahadkhan@uwindsor.ca'} />
                 <div className='post-card-header-date'>
                     {dateFull} <br />
                     {timeFull}
