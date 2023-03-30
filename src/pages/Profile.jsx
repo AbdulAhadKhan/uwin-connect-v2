@@ -6,13 +6,18 @@ import { useQuery } from '@tanstack/react-query'
 import PostCardGenerator from './components/post-card/post-card-generator'
 import Navbar from './components/navbar/navbar'
 import UserCard from './components/user-details/user-card'
-import { getUserDetails } from '../api/users'
+import { getUserDetails, friendshipStatus } from '../api/users'
 import { getUserPostsByTimestamp } from '../api/posts'
 
 import './Profile.css'
 function ProfilePage({ user, id }) {
+    const sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'))
+    const currentUserEmail = sessionInfo.id + '@' + sessionInfo.domain
+    const isUser = currentUserEmail === user.email
+
     const [noPosts, setNoPosts] = useState(false)
     const [compToShow, setCompToShow] = useState(<></>)
+    const [areFriends, setAreFriends] = useState(false)
 
     const { data, fetchNextPage, hasNextPage, isLoading, isSuccess } =
         useInfiniteQuery({
@@ -45,11 +50,21 @@ function ProfilePage({ user, id }) {
             setCompToShow(<h1>No posts here yet... 🧐</h1>)
     }, [isLoading, isSuccess, noPosts, data])
 
+    useQuery({
+        queryKey: ['friendship-status', currentUserEmail, user.email],
+        queryFn: () => friendshipStatus(currentUserEmail, user.email),
+        onSuccess: (response) => setAreFriends(response.data.are_friends),
+    })
+
     return (
         <div className='naved-page profile-page tripple-grid'>
             <Navbar />
             <div className='profile-card-col'>
-                <UserCard user={user} id={id} />
+                <UserCard
+                    user={user}
+                    editable={isUser}
+                    areFriends={areFriends}
+                />
             </div>
             <div className='post-col'>
                 <div className='post-card-container'>{compToShow}</div>

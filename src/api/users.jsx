@@ -11,3 +11,9 @@ export function putUserDetails(email, data) {
 export function findUser(query) {
     return instance.get(`/query-users/${query}`)
 }
+
+export function friendshipStatus(email, friendsEmail) {
+    return instance.get('/friendship-status', {
+        params: { email: email, friends_email: friendsEmail },
+    })
+}

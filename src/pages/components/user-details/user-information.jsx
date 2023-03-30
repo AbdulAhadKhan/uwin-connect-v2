@@ -9,7 +9,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { putUserDetails } from '../../../api/users'
 
-export default function UserInformation({ user, editable }) {
+export default function UserInformation({ user, editable, areFriends }) {
     const queryClient = useQueryClient()
     const [editing, setEditing] = useState(false)
     const [firstname, setFirstname] = useState(user.firstname)
@@ -65,17 +65,18 @@ export default function UserInformation({ user, editable }) {
                         )}
                     </IconContext.Provider>
                 </div>
-            )) || (
-                <div className='user-details__action add' onClick={changeMode}>
-                    <IconContext.Provider
-                        value={{
-                            className: 'user-details__action-icon add',
-                        }}>
-                        <HiUserPlus />
-                    </IconContext.Provider>
-                </div>
-            )}
-            {(editing && (
+            )) ||
+                (!areFriends && !editable && (
+                    <div className='user-details__action add'>
+                        <IconContext.Provider
+                            value={{
+                                className: 'user-details__action-icon add',
+                            }}>
+                            <HiUserPlus />
+                        </IconContext.Provider>
+                    </div>
+                ))}
+            {(editing && editable && (
                 <>
                     <span className='user-details__name-edit'>
                         <input
@@ -121,7 +122,7 @@ export default function UserInformation({ user, editable }) {
             </p>
 
             <div className='description'>
-                {(editing && (
+                {(editing && editable && (
                     <textarea
                         className='user-details__description-edit'
                         type='text'
@@ -139,7 +140,7 @@ export default function UserInformation({ user, editable }) {
                 )}
             </div>
 
-            {editing && (
+            {editing && editable && (
                 <button
                     className='save-edit-button'
                     disabled={
