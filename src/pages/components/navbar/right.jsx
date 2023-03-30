@@ -8,9 +8,7 @@ import FallbackAvatar from '../FallbackAvatar'
 
 import { getUserDetails } from '../../../api/users'
 
-function ProfileImage({ image_id }) {
-    const { id } = JSON.parse(localStorage.getItem('sessionInfo'))
-
+function ProfileImage({ image_id, id }) {
     return image_id ? (
         <img
             src={`http://localhost:8000/get-image/${image_id}`}
@@ -21,13 +19,10 @@ function ProfileImage({ image_id }) {
     )
 }
 
-export function NameTag() {
+export function NameTag({ email }) {
     const navigate = useNavigate()
-
-    const { id, domain } = JSON.parse(localStorage.getItem('sessionInfo'))
+    const id = email.split('@')[0]
     const [user, setUser] = useState({ firstname: 'John', lastname: 'Doe' })
-    const email = id + '@' + domain
-
     const toProfile = () => navigate(`/profile/${id}`)
 
     useQuery({
@@ -39,7 +34,7 @@ export function NameTag() {
     return (
         <div className='navbar__profile' onClick={toProfile}>
             <ProfileImage
-                user_name={id}
+                id={id}
                 className='profile-image'
                 image_id={user?.image}
             />
@@ -55,6 +50,8 @@ export function NameTag() {
 
 export default function Right() {
     const navigate = useNavigate()
+    const { id, domain } = JSON.parse(localStorage.getItem('sessionInfo'))
+    const email = id + '@' + domain
 
     const logout = () => {
         localStorage.removeItem('sessionInfo')
@@ -73,7 +70,7 @@ export default function Right() {
                 size={'1.25em'}
                 onClick={() => navigate('/chat')}
             />
-            <NameTag />
+            <NameTag email={email} id={id} />
         </div>
     )
 }
