@@ -19,8 +19,9 @@ function ProfileImage({ image_id, id }) {
     )
 }
 
-export function NameTag({ email, id }) {
+export function NameTag({ email }) {
     const navigate = useNavigate()
+    const id = email.split('@')[0]
     const [user, setUser] = useState({ firstname: 'John', lastname: 'Doe' })
     const toProfile = () => navigate(`/profile/${id}`)
 
