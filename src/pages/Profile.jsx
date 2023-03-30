@@ -11,16 +11,39 @@ import { getUserPostsByTimestamp } from '../api/posts'
 
 import './Profile.css'
 function ProfilePage({ user, id }) {
-    const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-        queryKey: ['user-posts', user.email],
-        queryFn: ({ pageParam = Date.now() }) => {
-            return getUserPostsByTimestamp(user.email, pageParam, 2)
-        },
-        getNextPageParam: (lastPage, pages) => {
-            if (lastPage.data.next === null) return undefined
-            return lastPage.data.next.page
-        },
-    })
+    const [noPosts, setNoPosts] = useState(false)
+    const [compToShow, setCompToShow] = useState(<></>)
+
+    const { data, fetchNextPage, hasNextPage, isLoading, isSuccess } =
+        useInfiniteQuery({
+            queryKey: ['user-posts', user.email],
+            queryFn: ({ pageParam = Date.now() }) => {
+                return getUserPostsByTimestamp(user.email, pageParam, 2)
+            },
+            getNextPageParam: (lastPage, pages) => {
+                if (lastPage.data.next === null) return undefined
+                return lastPage.data.next.page
+            },
+            onSuccess: (response) => {
+                if (response?.pages[0]?.data?.posts.length === 0)
+                    setNoPosts(true)
+                else setNoPosts(false)
+            },
+        })
+
+    useEffect(() => {
+        if (isLoading) setCompToShow(<h1>Loading...</h1>)
+        else if (isSuccess && !noPosts)
+            setCompToShow(
+                <PostCardGenerator
+                    data={data}
+                    fetchNextPage={fetchNextPage}
+                    hasNextPage={hasNextPage}
+                />
+            )
+        else if (isSuccess && noPosts)
+            setCompToShow(<h1>No posts here yet... 🧐</h1>)
+    }, [isLoading, isSuccess, noPosts, data])
 
     return (
         <div className='naved-page profile-page tripple-grid'>
@@ -29,15 +52,7 @@ function ProfilePage({ user, id }) {
                 <UserCard user={user} id={id} />
             </div>
             <div className='post-col'>
-                <div className='post-card-container'>
-                    {(isLoading && <h1>Loading...</h1>) || (
-                        <PostCardGenerator
-                            data={data}
-                            fetchNextPage={fetchNextPage}
-                            hasNextPage={hasNextPage}
-                        />
-                    )}
-                </div>
+                <div className='post-card-container'>{compToShow}</div>
             </div>
         </div>
     )
