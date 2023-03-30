@@ -5,13 +5,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { uploadProfileImage } from '../../../api/images'
 import FallbackAvatar from '../FallbackAvatar'
 
-function ImageOrAvatar({ imageSource, id }) {
+function ImageOrAvatar({ imageSource, email }) {
     return (
         <>
             {imageSource ? (
                 <img src={imageSource} alt='User Avatar' />
             ) : (
-                <FallbackAvatar id={id} square />
+                <FallbackAvatar id={email} square />
             )}
         </>
     )
@@ -65,10 +65,8 @@ function Avatar({ editable, inputRef, handleImageChange, previewImage, id }) {
     )
 }
 
-export default function UserAvatar({ imageID, id, editable }) {
+export default function UserAvatar({ imageID, email, editable }) {
     const queryClient = useQueryClient()
-    const domain = JSON.parse(localStorage.getItem('sessionInfo')).domain
-    const email = `${id}@${domain}`
     const generateImageLink = (iid) => `http://localhost:8000/get-image/${iid}`
     const iconProps = { size: '2em', color: '#454545' }
 
@@ -112,7 +110,13 @@ export default function UserAvatar({ imageID, id, editable }) {
     return (
         <div className='avatar-container'>
             <Avatar
-                {...{ editable, inputRef, handleImageChange, previewImage, id }}
+                {...{
+                    editable,
+                    inputRef,
+                    handleImageChange,
+                    previewImage,
+                    email,
+                }}
             />
             {uploadImage && (
                 <div className='upload-actions'>
