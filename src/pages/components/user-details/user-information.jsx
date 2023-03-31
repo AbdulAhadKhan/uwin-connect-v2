@@ -70,9 +70,6 @@ export default function UserInformation({
     const [hideAdd, setHideAdd] = useState(areFriends)
     const [friendAction, setFriendAction] = useState()
 
-    console.log('areFriends', areFriends)
-    console.log('hideAdd', hideAdd)
-
     const changeEvent = (event, limit, setter, validator) => {
         if (
             event.target.value.length <= limit &&
