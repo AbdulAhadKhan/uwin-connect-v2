@@ -68,7 +68,7 @@ export default function UserInformation({
     const [description, setDescription] = useState(user.description)
     const [descriptionValid, setDescriptionValid] = useState(true)
     const [hideAdd, setHideAdd] = useState(areFriends)
-    const [friendAction, setFriendAction] = useState()
+    const [saveEnabled, setSaveEnabled] = useState(true)
 
     const changeEvent = (event, limit, setter, validator) => {
         if (
@@ -86,9 +86,15 @@ export default function UserInformation({
         setLastname(user.lastname)
         setDescription(user.description)
         setEditing(false)
+        setSaveEnabled(true)
     }
 
-    const changeMode = () => (editing ? cancelEdit() : setEditing(true))
+    const changeMode = () => {
+        if (editing) {
+            cancelEdit()
+            setEditing(false)
+        } else setEditing(true)
+    }
 
     const submitEdit = useMutation({
         mutationFn: () =>
@@ -102,6 +108,14 @@ export default function UserInformation({
     useEffect(() => {
         setHideAdd(areFriends)
     }, [areFriends])
+
+    useEffect(() => {
+        if (firstnameValid && lastnameValid && descriptionValid) {
+            setSaveEnabled(true)
+        } else setSaveEnabled(false)
+    }, [firstnameValid, lastnameValid, descriptionValid])
+
+    console.log(saveEnabled)
 
     return (
         <div className='user-details__info'>
@@ -194,9 +208,7 @@ export default function UserInformation({
             {editing && editable && (
                 <button
                     className='save-edit-button'
-                    disabled={
-                        !firstnameValid || !lastnameValid || !descriptionValid
-                    }
+                    disabled={!saveEnabled}
                     onClick={submitEdit.mutate}>
                     Save
                 </button>
