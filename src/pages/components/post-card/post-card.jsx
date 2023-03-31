@@ -22,6 +22,7 @@ export default function PostCard({ post }) {
     const [likes, setLikes] = useState(post.likes)
     const [isLiked, setIsLiked] = useState(false)
     const [comments, setComments] = useState()
+    const [showComments, setShowComments] = useState(false)
 
     useEffect(() => {
         setLikes(post.likes)
@@ -87,7 +88,9 @@ export default function PostCard({ post }) {
                             </IconContext.Provider>
                         )}
                     </div>
-                    <div className='interaction-container'>
+                    <div
+                        className='interaction-container'
+                        onClick={() => setShowComments(!showComments)}>
                         <p>Comment</p>
                         <IconContext.Provider
                             value={{ className: 'post-icon' }}>
@@ -96,9 +99,11 @@ export default function PostCard({ post }) {
                     </div>
                 </div>
             </div>
-            <div className='post-card-comments'>
-                <CommentBox comments={comments} />
-            </div>
+            {showComments && (
+                <div className='post-card-comments'>
+                    <CommentBox comments={comments} />
+                </div>
+            )}
         </div>
     )
 }

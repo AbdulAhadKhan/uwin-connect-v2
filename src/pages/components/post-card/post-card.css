@@ -187,3 +187,39 @@
 .post-card-comments .comment .navbar__profile .email {
     font-size: 0.8em;
 }
+
+.comment.new {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+}
+
+.comment.new button {
+    background-color: #006fc3;
+    color: #eaeaea;
+    border: none;
+    outline: none;
+    padding: 0.2rem 1rem;
+    border-radius: 0.2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.comment.new textarea {
+    width: 80%;
+    height: 3rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #080808;
+    outline: none;
+    resize: none;
+}
