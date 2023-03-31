@@ -19,3 +19,11 @@ export function getPostsByFriends(email, nextTimestamp, pageSize) {
         `/get-friends-posts/${email}?next_timestamp=${nextTimestamp}&page_size=${pageSize}`
     )
 }
+
+export function likePost(postID, email) {
+    return instance.put(`/like-post/${postID}?email=${email}`)
+}
+
+export function unlikePost(postID, email) {
+    return instance.put(`/unlike-post/${postID}?email=${email}`)
+}
