@@ -4,6 +4,10 @@ export function getUserDetails(email) {
     return instance.get(`/get-user/${email}`)
 }
 
+export function getMinimumUserDetails(email) {
+    return instance.get(`/get-user-minimal-info/${email}`)
+}
+
 export function putUserDetails(email, data) {
     return instance.put(`/update-user/${email}`, data)
 }

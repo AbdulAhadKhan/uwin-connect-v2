@@ -5,6 +5,7 @@ import { HiOutlineChatBubbleOvalLeft } from 'react-icons/hi2'
 
 import { likePost, unlikePost } from '../../../api/posts'
 import { unixTimeToDateTime } from '../../../utils'
+import CommentBox from './comment-box'
 import { NameTag } from '../navbar/right'
 
 import './post-card.css'
@@ -20,6 +21,8 @@ export default function PostCard({ post }) {
 
     const [likes, setLikes] = useState(post.likes)
     const [isLiked, setIsLiked] = useState(false)
+    const [comments, setComments] = useState()
+    const [showComments, setShowComments] = useState(false)
 
     useEffect(() => {
         setLikes(post.likes)
@@ -28,7 +31,12 @@ export default function PostCard({ post }) {
         else setIsLiked(false)
     }, [post.likes])
 
-    console.log(post.id)
+    useEffect(() => {
+        if (post.comments && post.comments.length > 0) {
+            post.comments.sort((a, b) => b.timestamp - a.timestamp)
+            setComments(post.comments)
+        } else setComments()
+    }, [post.comments])
 
     const handleLike = () => {
         if (isLiked) {
@@ -81,7 +89,9 @@ export default function PostCard({ post }) {
                             </IconContext.Provider>
                         )}
                     </div>
-                    <div className='interaction-container'>
+                    <div
+                        className='interaction-container'
+                        onClick={() => setShowComments(!showComments)}>
                         <p>Comment</p>
                         <IconContext.Provider
                             value={{ className: 'post-icon' }}>
@@ -90,6 +100,11 @@ export default function PostCard({ post }) {
                     </div>
                 </div>
             </div>
+            {showComments && (
+                <div className='post-card-comments'>
+                    <CommentBox comments={comments} postId={post.id} />
+                </div>
+            )}
         </div>
     )
 }
