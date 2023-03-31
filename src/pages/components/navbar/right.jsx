@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { BiMessageAlt } from 'react-icons/bi'
 import { HiOutlineLogout } from 'react-icons/hi'
+import { FiAlertCircle } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 
 import FallbackAvatar from '../FallbackAvatar'
@@ -69,6 +70,14 @@ export default function Right() {
                 className='message-icon'
                 size={'1.25em'}
                 onClick={() => navigate('/chat')}
+            />
+            <FiAlertCircle
+                className='message-icon'
+                size={'1.25em'}
+                onClick={() =>
+                    (window.location.href =
+                        'https://www.uwindsor.ca/itservices/support')
+                }
             />
             <NameTag email={email} id={id} />
         </div>
