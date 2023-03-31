@@ -23,7 +23,7 @@ function ProfilePage({ user, id }) {
         useInfiniteQuery({
             queryKey: ['user-posts', user.email],
             queryFn: ({ pageParam = Date.now() }) => {
-                return getUserPostsByTimestamp(user.email, pageParam, 2)
+                return getUserPostsByTimestamp(user.email, pageParam, 5)
             },
             getNextPageParam: (lastPage, pages) => {
                 if (lastPage.data.next === null) return undefined

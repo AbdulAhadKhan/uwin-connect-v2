@@ -54,6 +54,7 @@ function CreatePost({ setOpen, mutate }) {
         formData.append('timestamp', Date.now())
         mutate(formData)
         queryClient.invalidateQueries(['user-posts', email])
+        queryClient.invalidateQueries(['friends-posts', email])
     }
 
     return (
