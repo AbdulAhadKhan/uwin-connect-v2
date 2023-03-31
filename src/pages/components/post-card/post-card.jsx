@@ -32,9 +32,10 @@ export default function PostCard({ post }) {
     }, [post.likes])
 
     useEffect(() => {
-        if (post.comments && post.comments.length > 0)
+        if (post.comments && post.comments.length > 0) {
+            post.comments.sort((a, b) => b.timestamp - a.timestamp)
             setComments(post.comments)
-        else setComments()
+        } else setComments()
     }, [post.comments])
 
     const handleLike = () => {
@@ -101,7 +102,7 @@ export default function PostCard({ post }) {
             </div>
             {showComments && (
                 <div className='post-card-comments'>
-                    <CommentBox comments={comments} />
+                    <CommentBox comments={comments} postId={post.id} />
                 </div>
             )}
         </div>

@@ -27,3 +27,7 @@ export function likePost(postID, email) {
 export function unlikePost(postID, email) {
     return instance.put(`/unlike-post/${postID}?email=${email}`)
 }
+
+export function addComment(postID, data) {
+    return instance.put(`/comment-post/${postID}`, data)
+}

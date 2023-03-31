@@ -210,6 +210,12 @@
     cursor: pointer;
 }
 
+.comment.new button:disabled {
+    background-color: #e6e6e6;
+    color: #8b8d97;
+    cursor: not-allowed;
+}
+
 .comment.new textarea {
     width: 80%;
     height: 3rem;
