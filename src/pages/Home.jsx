@@ -26,7 +26,6 @@ export default function Home() {
                 return getPostsByFriends(email, pageParam, 5)
             },
             getNextPageParam: (lastPage, pages) => {
-                console.log(lastPage)
                 if (lastPage.data.next === null) return undefined
                 return lastPage.data.next.page
             },

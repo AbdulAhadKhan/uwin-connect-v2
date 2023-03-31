@@ -115,8 +115,6 @@ export default function UserInformation({
         } else setSaveEnabled(false)
     }, [firstnameValid, lastnameValid, descriptionValid])
 
-    console.log(saveEnabled)
-
     return (
         <div className='user-details__info'>
             {(editable && (
