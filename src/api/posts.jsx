@@ -13,3 +13,9 @@ export function getUserPostsByTimestamp(email, nextTimestamp, pageSize) {
         `/get-posts/${email}?next_timestamp=${nextTimestamp}&page_size=${pageSize}`
     )
 }
+
+export function getPostsByFriends(email, nextTimestamp, pageSize) {
+    return instance.get(
+        `/get-friends-posts/${email}?next_timestamp=${nextTimestamp}&page_size=${pageSize}`
+    )
+}
