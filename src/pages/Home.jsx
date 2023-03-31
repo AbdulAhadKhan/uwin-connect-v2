@@ -23,7 +23,7 @@ export default function Home() {
         useInfiniteQuery({
             queryKey: ['friends-posts', email],
             queryFn: ({ pageParam = Date.now() }) => {
-                return getPostsByFriends(email, pageParam, 2)
+                return getPostsByFriends(email, pageParam, 5)
             },
             getNextPageParam: (lastPage, pages) => {
                 console.log(lastPage)
