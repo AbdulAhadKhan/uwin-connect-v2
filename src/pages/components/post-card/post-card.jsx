@@ -5,6 +5,7 @@ import { HiOutlineChatBubbleOvalLeft } from 'react-icons/hi2'
 
 import { likePost, unlikePost } from '../../../api/posts'
 import { unixTimeToDateTime } from '../../../utils'
+import CommentBox from './comment-box'
 import { NameTag } from '../navbar/right'
 
 import './post-card.css'
@@ -20,6 +21,7 @@ export default function PostCard({ post }) {
 
     const [likes, setLikes] = useState(post.likes)
     const [isLiked, setIsLiked] = useState(false)
+    const [comments, setComments] = useState()
 
     useEffect(() => {
         setLikes(post.likes)
@@ -28,7 +30,11 @@ export default function PostCard({ post }) {
         else setIsLiked(false)
     }, [post.likes])
 
-    console.log(post.id)
+    useEffect(() => {
+        if (post.comments && post.comments.length > 0)
+            setComments(post.comments)
+        else setComments()
+    }, [post.comments])
 
     const handleLike = () => {
         if (isLiked) {
@@ -89,6 +95,9 @@ export default function PostCard({ post }) {
                         </IconContext.Provider>
                     </div>
                 </div>
+            </div>
+            <div className='post-card-comments'>
+                <CommentBox comments={comments} />
             </div>
         </div>
     )
