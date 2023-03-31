@@ -47,12 +47,20 @@ function AddComment({ postId }) {
         else setValidComment(false)
     }
 
+    const handleEnterPress = (e) => {
+        if (e.key === 'Enter' && validComment) {
+            handleSubmit(e)
+            e.target.blur()
+        }
+    }
+
     return (
         <div className='comment new'>
             <textarea
                 placeholder='Add a comment...'
                 value={comment}
                 onChange={handleCommentChange}
+                onKeyDown={handleEnterPress}
             />
             <button onClick={handleSubmit} disabled={!validComment}>
                 Post
