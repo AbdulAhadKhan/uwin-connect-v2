@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IconContext } from 'react-icons'
 import {
     HiOutlinePencilSquare,
@@ -9,6 +9,49 @@ import {
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { putUserDetails, addFriend, removeFriend } from '../../../api/users'
+
+function FriendAction({
+    hideAdd,
+    setHideAdd,
+    queryClient,
+    user,
+    currentUserEmail,
+}) {
+    const friendMutation = useMutation({
+        mutationFn: (action) => action(currentUserEmail, user.email),
+        onSuccess: () => {
+            setHideAdd(!hideAdd)
+            queryClient.invalidateQueries(['user-profile', user.email])
+        },
+    })
+
+    return (
+        (!hideAdd && (
+            <div
+                className='user-details__action add'
+                onClick={() => friendMutation.mutate(addFriend)}>
+                <IconContext.Provider
+                    value={{
+                        className: 'user-details__action-icon add',
+                    }}>
+                    <HiUserPlus />
+                </IconContext.Provider>
+            </div>
+        )) ||
+        (hideAdd && (
+            <div
+                className='user-details__action remove'
+                onClick={() => friendMutation.mutate(removeFriend)}>
+                <IconContext.Provider
+                    value={{
+                        className: 'user-details__action-icon remove',
+                    }}>
+                    <HiUserMinus />
+                </IconContext.Provider>
+            </div>
+        ))
+    )
+}
 
 export default function UserInformation({
     user,
@@ -25,8 +68,7 @@ export default function UserInformation({
     const [description, setDescription] = useState(user.description)
     const [descriptionValid, setDescriptionValid] = useState(true)
     const [hideAdd, setHideAdd] = useState(areFriends)
-
-    console.log('user', currentUserEmail)
+    const [saveEnabled, setSaveEnabled] = useState(true)
 
     const changeEvent = (event, limit, setter, validator) => {
         if (
@@ -44,9 +86,15 @@ export default function UserInformation({
         setLastname(user.lastname)
         setDescription(user.description)
         setEditing(false)
+        setSaveEnabled(true)
     }
 
-    const changeMode = () => (editing ? cancelEdit() : setEditing(true))
+    const changeMode = () => {
+        if (editing) {
+            cancelEdit()
+            setEditing(false)
+        } else setEditing(true)
+    }
 
     const submitEdit = useMutation({
         mutationFn: () =>
@@ -57,13 +105,15 @@ export default function UserInformation({
         },
     })
 
-    const mutation = useMutation({
-        mutationFn: (action) => action(currentUserEmail, user.email),
-        onSuccess: () => {
-            setHideAdd(!hideAdd)
-            queryClient.invalidateQueries(['user-profile', user.email])
-        },
-    })
+    useEffect(() => {
+        setHideAdd(areFriends)
+    }, [areFriends])
+
+    useEffect(() => {
+        if (firstnameValid && lastnameValid && descriptionValid) {
+            setSaveEnabled(true)
+        } else setSaveEnabled(false)
+    }, [firstnameValid, lastnameValid, descriptionValid])
 
     return (
         <div className='user-details__info'>
@@ -82,31 +132,15 @@ export default function UserInformation({
                         )}
                     </IconContext.Provider>
                 </div>
-            )) ||
-                (!hideAdd && !editable && (
-                    <div
-                        className='user-details__action add'
-                        onClick={() => mutation.mutate(addFriend)}>
-                        <IconContext.Provider
-                            value={{
-                                className: 'user-details__action-icon add',
-                            }}>
-                            <HiUserPlus />
-                        </IconContext.Provider>
-                    </div>
-                )) ||
-                (hideAdd && !editable && (
-                    <div
-                        className='user-details__action remove'
-                        onClick={() => mutation.mutate(removeFriend)}>
-                        <IconContext.Provider
-                            value={{
-                                className: 'user-details__action-icon remove',
-                            }}>
-                            <HiUserMinus />
-                        </IconContext.Provider>
-                    </div>
-                ))}
+            )) || (
+                <FriendAction
+                    hideAdd={hideAdd}
+                    setHideAdd={setHideAdd}
+                    queryClient={queryClient}
+                    user={user}
+                    currentUserEmail={currentUserEmail}
+                />
+            )}
             {(editing && editable && (
                 <>
                     <span className='user-details__name-edit'>
@@ -151,7 +185,6 @@ export default function UserInformation({
                 {user.role.designation || user.role.title} |{' '}
                 {user.role.department}
             </p>
-
             <div className='description'>
                 {(editing && editable && (
                     <textarea
@@ -170,13 +203,10 @@ export default function UserInformation({
                     <p>{user.description || 'A valued member of UWindsor.'}</p>
                 )}
             </div>
-
             {editing && editable && (
                 <button
                     className='save-edit-button'
-                    disabled={
-                        !firstnameValid || !lastnameValid || !descriptionValid
-                    }
+                    disabled={!saveEnabled}
                     onClick={submitEdit.mutate}>
                     Save
                 </button>

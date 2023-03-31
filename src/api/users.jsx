@@ -19,7 +19,6 @@ export function friendshipStatus(email, friendsEmail) {
 }
 
 export function addFriend(email, friendsEmail) {
-    console.log(email, friendsEmail)
     return instance.get('/add-friend', {
         params: { email: email, friends_email: friendsEmail },
     })

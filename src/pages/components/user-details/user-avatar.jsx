@@ -76,6 +76,7 @@ export default function UserAvatar({ imageID, email, editable }) {
     const generateImageLink = (iid) => `http://localhost:8000/get-image/${iid}`
     const iconProps = { size: '2em', color: '#454545' }
 
+    const [initialImage, setInitialImage] = useState(imageID)
     const [uploadImage, setUploadImage] = useState()
     const [previewImage, setPreviewImage] = useState()
 
@@ -83,7 +84,7 @@ export default function UserAvatar({ imageID, email, editable }) {
 
     useEffect(() => {
         if (imageID) {
-            setPreviewImage(generateImageLink(imageID))
+            setPreviewImage(generateImageLink(initialImage))
         } else {
             setPreviewImage()
         }
@@ -97,7 +98,11 @@ export default function UserAvatar({ imageID, email, editable }) {
     }
 
     const handleCancel = () => {
-        setPreviewImage(generateImageLink(imageID))
+        if (initialImage) {
+            setPreviewImage(generateImageLink(initialImage))
+        } else {
+            setPreviewImage()
+        }
         setUploadImage()
     }
 

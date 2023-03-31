@@ -252,3 +252,8 @@ p.role-department::first-letter {
 .save-edit-button:hover {
     background-color: #005a9e;
 }
+
+.save-edit-button:disabled {
+    background-color: #8f8f8f;
+    cursor: not-allowed;
+}
