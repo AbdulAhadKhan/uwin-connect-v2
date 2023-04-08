@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { IconContext } from 'react-icons'
 import { AiOutlineLike, AiFillLike } from 'react-icons/ai'
 import { HiOutlineChatBubbleOvalLeft } from 'react-icons/hi2'
@@ -7,6 +7,7 @@ import { likePost, unlikePost } from '../../../api/posts'
 import { unixTimeToDateTime } from '../../../utils'
 import CommentBox from './comment-box'
 import { NameTag } from '../navbar/right'
+import { useIsVisible } from '../visibility-observer/visibility-observer'
 
 import './post-card.css'
 
